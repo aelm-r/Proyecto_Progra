@@ -1,0 +1,21 @@
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Angular
+.angular/
+dist/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Archivos temporales
+*.log
