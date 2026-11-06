@@ -1,0 +1,112 @@
+<main class="panel">
+  <header class="barra">
+    <label class="selector">
+      <span>Combate</span>
+      <select [ngModel]="combate()?.id" (ngModelChange)="seleccionar($event)">
+        @for (c of combates(); track c.id) {
+          <option [ngValue]="c.id">Combate {{ c.numeroOrden }} de 16 · {{ c.fase }} · {{ etiquetaEstado(c.estado) }}</option>
+        }
+      </select>
+    </label>
+  </header>
+
+  @if (combate(); as c) {
+    <section class="cartel" aria-live="polite">
+      <article class="equipo" [style.--color]="c.equipoA?.colorHex ?? '#8a94a0'">
+        <h2>{{ c.equipoA?.nombre ?? 'Por definir' }}</h2>
+      </article>
+
+      <div class="centro">
+        <p class="marcador">{{ c.marcador }}</p>
+        <p class="estado" [attr.data-estado]="c.estado">{{ etiquetaEstado(c.estado) }}</p>
+        @if (c.asaltoAbierto; as a) {
+          <p class="asalto">Asalto {{ a.numero }}@if (a.esMuerteSubita) { · muerte súbita }</p>
+        }
+      </div>
+
+      <article class="equipo" [style.--color]="c.equipoB?.colorHex ?? '#8a94a0'">
+        <h2>{{ c.equipoB?.nombre ?? 'Por definir' }}</h2>
+      </article>
+    </section>
+
+    @if (error() && !dialogo()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <section class="acciones" aria-label="Acciones del combate">
+      <button class="btn btn--principal" [disabled]="!puede().iniciar" (click)="iniciar()">Iniciar combate</button>
+      <button class="btn btn--principal" [disabled]="!puede().iniciarAsalto" (click)="iniciarAsalto()">Iniciar asalto</button>
+      <button class="btn btn--principal" [disabled]="!puede().cerrarAsalto" (click)="abrir('asalto')">Registrar ganador del asalto</button>
+      <button class="btn" [disabled]="!puede().cerrarAsalto" (click)="abrir('asalto', 'nulo')">Asalto nulo</button>
+      <button class="btn" [disabled]="!puede().amonestar" (click)="abrir('amonestacion')">Amonestación</button>
+      <button class="btn" [disabled]="!puede().pausar" (click)="pausar()">Pausa técnica</button>
+      <button class="btn" [disabled]="!puede().reanudar" (click)="reanudar()">Reanudar</button>
+      <button class="btn btn--cierre" [disabled]="!puede().finalizar" (click)="abrir('finalizar')">Finalizar combate</button>
+      <button class="btn btn--peligro" [disabled]="!puede().wo" (click)="abrir('wo')">W.O.</button>
+    </section>
+  } @else {
+    <p class="vacio">No hay combates para mostrar. Revisa la conexión con el servidor.</p>
+  }
+
+  @if (dialogo(); as d) {
+    <div class="velo" (click)="cerrarDialogo()">
+      <div class="dialogo" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+        @switch (d) {
+          @case ('finalizar') {
+            <h3>¿Finalizar el combate?</h3>
+            <p>El servidor calcula el ganador y deja el resultado como oficial.</p>
+          }
+          @case ('wo') {
+            <h3>¿Qué equipo no se presentó?</h3>
+            <p>Pierde el combate 2 a 0. Esta acción cierra el combate.</p>
+          }
+          @case ('amonestacion') {
+            <h3>Registrar amonestación</h3>
+          }
+          @case ('asalto') {
+            <h3>Cerrar el asalto</h3>
+            <fieldset class="opciones">
+              <legend>¿Cómo terminó?</legend>
+              @for (r of resultados; track r.valor) {
+                @if (r.valor !== 'decision_juez' || esMuerteSubita()) {
+                  <label class="opcion">
+                    <input type="radio" name="resultado" [value]="r.valor" [(ngModel)]="resultadoSel" />
+                    <span>{{ r.texto }}</span>
+                  </label>
+                }
+              }
+            </fieldset>
+          }
+        }
+
+        @if (d !== 'finalizar' && !(d === 'asalto' && resultadoSel() === 'nulo')) {
+          <fieldset class="equipos">
+            <legend>{{ d === 'asalto' ? '¿Quién ganó el asalto?' : 'Equipo' }}</legend>
+            @for (e of equipos(); track e.id) {
+              <label class="eq" [style.--color]="e.colorHex" [class.eq--sel]="equipoSel() === e.id">
+                <input type="radio" name="equipo" [value]="e.id" [(ngModel)]="equipoSel" />
+                <span>{{ e.nombre }}</span>
+              </label>
+            }
+          </fieldset>
+        }
+
+        @if (d === 'amonestacion') {
+          <label class="campo">
+            <span>Motivo</span>
+            <input type="text" name="motivo" [(ngModel)]="motivo" maxlength="200" />
+          </label>
+        }
+
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <div class="pie">
+          <button class="btn" (click)="cerrarDialogo()">Cancelar</button>
+          <button class="btn btn--principal" [disabled]="!dialogoValido() || cargando()" (click)="confirmar()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  }
+</main>
