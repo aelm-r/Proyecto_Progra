@@ -1,0 +1,111 @@
+.contenedor-sorteo {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  font-size: 60px;
+  margin-bottom: 35px;
+}
+
+.grupos {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+}
+
+.grupo {
+  width: 420px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.grupo-a {
+  border: 3px solid #00aaff;
+}
+
+.grupo-b {
+  border: 3px solid #ff3333;
+}
+
+.grupo h2 {
+  font-size: 40px;
+  margin-bottom: 25px;
+}
+
+.tarjeta-equipo {
+  padding: 15px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+.tarjeta-equipo h3 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.tarjeta-equipo p {
+  font-size: 22px;
+  margin: 5px 0 0;
+}
+.boton-iniciar {
+    padding: 15px 35px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background: #0077cc;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.boton-iniciar:hover {
+    background: #0099ff;
+}
+
+.equipo-destacado {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ffd700;
+    border-radius: 15px;
+    padding: 12px 35px;
+    margin: 0 auto 20px;
+    width: fit-content;
+}
+
+.equipo-destacado h2 {
+    font-size: 32px;
+    margin: 0;
+}
+
+.equipo-destacado p {
+    font-size: 22px;
+    margin: 5px 0 0;
+}
+
+.animacion-entrada {
+    animation: aparecer 0.7s ease-out;
+}
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+.mensaje-final {
+    font-size: 30px;
+    color: #ffd700;
+    margin-top: 20px;
+}

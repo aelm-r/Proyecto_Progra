@@ -1,0 +1,270 @@
+.contenedor-combatevivo {
+  width: 100%;
+  min-height: 100vh;
+  padding: 25px 35px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Encabezado */
+.encabezado-combate h1 {
+  font-size: 55px;
+  margin: 0 0 15px;
+  text-transform: uppercase;
+}
+
+.informacion-combate h2 {
+  font-size: 34px;
+  color: #ffd700;
+  margin: 0;
+}
+
+.informacion-combate p {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+/* Ronda actual */
+.informacion-ronda {
+  margin-top: 15px;
+}
+
+.informacion-ronda h2 {
+  font-size: 32px;
+  margin: 0;
+}
+
+/* Temporizador */
+.temporizador {
+  margin: 15px auto 25px;
+  width: 190px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 3px solid #ffd700;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
+}
+
+.temporizador span {
+  display: block;
+  font-size: 90px;
+  font-weight: bold;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.temporizador p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 8px 0 0;
+  letter-spacing: 3px;
+}
+
+/* Distribución del enfrentamiento */
+.enfrentamiento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  width: 100%;
+}
+
+/* Tarjetas de los equipos */
+.equipo {
+  width: 36%;
+  min-height: 310px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipo-a {
+  border: 3px solid #00aaff;
+}
+
+.equipo-b {
+  border: 3px solid #ff3333;
+}
+
+.logo-equipo {
+  font-size: 75px;
+  margin-bottom: 10px;
+}
+
+.equipo h2 {
+  font-size: 36px;
+  margin: 8px 0;
+  text-transform: uppercase;
+}
+
+.equipo p {
+  font-size: 23px;
+  margin: 5px 0;
+}
+
+/* Marcador de rondas */
+.marcador {
+  font-size: 65px;
+  font-weight: bold;
+  margin-top: 12px;
+  line-height: 1;
+}
+
+.texto-marcador {
+  font-size: 17px !important;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Centro del enfrentamiento */
+.centro-enfrentamiento {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.versus {
+  font-size: 65px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* Pausa técnica */
+.aviso-pausa {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffcc00;
+  text-shadow: 0 0 18px rgba(255, 204, 0, 0.7);
+  animation: parpadeo 1.5s infinite;
+}
+
+.aviso-pausa p {
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+/* Controles temporales de prueba */
+.controles-prueba {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.controles-prueba button {
+  padding: 13px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: #0077cc;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.controles-prueba button:hover:not(:disabled) {
+  background: #0099ff;
+}
+
+.controles-prueba button:disabled {
+  background: #555;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Animaciones */
+.equipo {
+  animation: aparecer 0.8s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes parpadeo {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.65;
+  }
+}
+
+/* Modo especial: muerte súbita */
+/* Borde neón de muerte súbita */
+.contenedor-combatevivo.modo-muerte-subita::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  border: 25px solid #ff2020;
+
+  box-shadow:
+    0 0 10px #ff2020,
+    0 0 20px #ff2020,
+    0 0 40px rgba(255, 32, 32, 0.8),
+    inset 0 0 10px #ff2020,
+    inset 0 0 30px rgba(255, 32, 32, 0.5);
+
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Título de muerte súbita */
+.titulo-muerte-subita {
+  color: #ff4545;
+  font-size: 42px !important;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-shadow: 0 0 18px rgba(255, 40, 40, 0.8);
+  animation: parpadeo 1.5s infinite;
+}
+
+/* Temporizador de muerte súbita */
+.temporizador-muerte-subita {
+  border-color: #ef2929;
+  box-shadow: 0 0 25px rgba(239, 41, 41, 0.5);
+}
+
+.temporizador-muerte-subita span {
+  color: #ff4545;
+  text-shadow: 0 0 15px rgba(255, 40, 40, 0.6);
+}
+
+/* Botón provisional */
+.controles-prueba button.boton-muerte-subita {
+  background: #b91c1c;
+}
+
+.controles-prueba button.boton-muerte-subita:hover:not(:disabled) {
+  background: #ef2929;
+}
+
+.controles-prueba button.boton-muerte-subita:disabled {
+  background: #555;
+}

@@ -1,0 +1,36 @@
+<div class="pantalla-tv">
+
+  @if (estadoActual === 'bienvenida') {
+
+    <app-bienvenida></app-bienvenida>
+
+  } @else if (estadoActual === 'sorteo') {
+
+    <app-sorteo></app-sorteo>
+
+  } @else if (estadoActual === 'proxcombate') {
+
+    <app-proxcombate></app-proxcombate>
+
+  } @else if (estadoActual === 'combatevivo') {
+
+    <app-combatevivo></app-combatevivo>
+
+  } @else if (estadoActual === 'resultado') {
+
+    <h1>RESULTADO FINAL</h1>
+    <h2>Equipo ganador</h2>
+
+  } @else if (estadoActual === 'rotacion') {
+
+    <h1>TABLA DE POSICIONES</h1>
+    <h2>Grupo A - Grupo B</h2>
+
+  } @else if (estadoActual === 'campeon') {
+
+    <h1>CAMPEÓN DEL TORNEO</h1>
+    <h2>¡Felicidades!</h2>
+
+  }
+
+</div>

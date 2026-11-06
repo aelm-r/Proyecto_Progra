@@ -1,0 +1,118 @@
+<div
+  class="contenedor-combatevivo"
+  [class.modo-muerte-subita]="muerteSubita()">
+
+  <!-- Encabezado -->
+  <div class="encabezado-combate">
+    <h1>{{ titulo }}</h1>
+
+    <div class="informacion-combate">
+      <h2>COMBATE {{ numeroCombate() }} DE {{ totalCombates() }}</h2>
+      <p>{{ fase() }}</p>
+    </div>
+  </div>
+
+  <!-- Información de la ronda -->
+<div class="informacion-ronda">
+  @if (muerteSubita()) {
+    <h2 class="titulo-muerte-subita">MUERTE SÚBITA</h2>
+  } @else {
+    <h2>RONDA {{ rondaActual() }} DE {{ totalRondas }}</h2>
+  }
+
+</div>
+
+  <!-- Temporizador -->
+<div
+  class="temporizador"
+  [class.temporizador-muerte-subita]="muerteSubita()">
+    <span>{{ tiempoRestante() }}</span>
+  </div>
+
+  <!-- Enfrentamiento -->
+  <div class="enfrentamiento">
+
+    <!-- Equipo A -->
+    <div class="equipo equipo-a">
+      <div class="logo-equipo">
+        {{ equipoA().logo }}
+      </div>
+
+      <h2>{{ equipoA().nombre }}</h2>
+      <p>Robot: {{ equipoA().robot }}</p>
+
+      <div class="marcador">
+        {{ marcadorA() }}
+      </div>
+      <p class="texto-marcador">RONDAS GANADAS</p>
+    </div>
+
+    <!-- VS o pausa -->
+    <div class="centro-enfrentamiento">
+
+      @if (pausaTecnica()) {
+        <div class="aviso-pausa">
+          PAUSA
+          <p>PAUSA TÉCNICA</p>
+        </div>
+      } @else {
+        <div class="versus">
+          VS
+        </div>
+      }
+
+    </div>
+
+    <!-- Equipo B -->
+    <div class="equipo equipo-b">
+      <div class="logo-equipo">
+        {{ equipoB().logo }}
+      </div>
+
+      <h2>{{ equipoB().nombre }}</h2>
+      <p>Robot: {{ equipoB().robot }}</p>
+
+      <div class="marcador">
+        {{ marcadorB() }}
+      </div>
+      <p class="texto-marcador">RONDAS GANADAS</p>
+    </div>
+
+  </div>
+
+  <!-- Controles temporales de prueba -->
+  <div class="controles-prueba">
+
+    <button
+      (click)="iniciarTemporizador()"
+      [disabled]="temporizadorActivo() || pausaTecnica() || tiempoRestante() === 0">
+      INICIAR TIEMPO
+    </button>
+
+    <button
+      (click)="activarPausa()"
+      [disabled]="pausaTecnica() || tiempoRestante() === 0">
+      PAUSA TÉCNICA
+    </button>
+
+    <button
+      (click)="reanudarCombate()"
+      [disabled]="!pausaTecnica()">
+      REANUDAR
+    </button>
+
+    @if (!muerteSubita()) {
+      <button
+        class="boton-muerte-subita"
+        (click)="activarMuerteSubita()">
+        ACTIVAR MUERTE SÚBITA
+      </button>
+    } @else {
+      <button
+        class="boton-muerte-subita"
+        (click)="desactivarMuerteSubita()">
+        VOLVER A MODO NORMAL
+      </button>
+    }
+  </div>
+</div>

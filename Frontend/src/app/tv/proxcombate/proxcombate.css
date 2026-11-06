@@ -1,0 +1,121 @@
+.contenedor-proxcombate {
+  width: 100%;
+  min-height: 100vh;
+  padding: 35px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Título principal */
+.contenedor-proxcombate h1 {
+  font-size: 60px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+/* Información del combate */
+.informacion-combate {
+  margin-bottom: 45px;
+}
+
+.informacion-combate h2 {
+  font-size: 38px;
+  margin: 0;
+  color: #ffd700;
+}
+
+.informacion-combate p {
+  font-size: 30px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+/* Distribución de los equipos */
+.enfrentamiento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 55px;
+  width: 100%;
+}
+
+/* Tarjetas de los equipos */
+.equipo {
+  width: 35%;
+  min-height: 330px;
+  padding: 30px;
+  box-sizing: border-box;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipo-a {
+  border: 3px solid #00aaff;
+}
+
+.equipo-b {
+  border: 3px solid #ff3333;
+}
+
+/* Logo o emoji del equipo */
+.logo-equipo {
+  font-size: 100px;
+  margin-bottom: 15px;
+}
+
+.equipo h2 {
+  font-size: 42px;
+  margin: 10px 0;
+  text-transform: uppercase;
+}
+
+.equipo p {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+/* VS central */
+.versus {
+  font-size: 75px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* Mensaje inferior */
+.mensaje-combate {
+  margin-top: 55px;
+}
+
+.mensaje-combate p {
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(0, 170, 255, 0.8);
+}
+
+/* Animación de entrada */
+.equipo {
+  animation: aparecer 0.8s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

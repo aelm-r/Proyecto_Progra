@@ -1,0 +1,50 @@
+<div class="contenedor-proxcombate">
+
+  <h1>{{ titulo }}</h1>
+
+  <div class="informacion-combate">
+    <h2>COMBATE {{ numeroCombate() }} DE {{ totalCombates() }}</h2>
+    <p>{{ fase() }}</p>
+  </div>
+
+  <div class="enfrentamiento">
+
+    <div class="equipo equipo-a">
+      <div class="logo-equipo">
+        {{ equipoA().logo }}
+      </div>
+
+      <h2>{{ equipoA().nombre }}</h2>
+      <p>
+        Robot: 
+        <br>
+        {{ equipoA().robot }}
+      </p>
+    </div>
+
+
+    <div class="versus">
+      <span>VS</span>
+    </div>
+
+    
+    <div class="equipo equipo-b">
+      <div class="logo-equipo">
+        {{ equipoB().logo }}
+      </div>
+
+      <h2>{{ equipoB().nombre }}</h2>
+      <p>
+        Robot: 
+        <br>
+        {{ equipoB().robot }}
+      </p>
+    </div>
+
+  </div>
+
+  <div class="mensaje-combate">
+    <p>{{ mensaje() }}</p>
+  </div>
+
+</div>
