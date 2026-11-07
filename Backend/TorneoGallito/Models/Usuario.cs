@@ -1,14 +1,7 @@
-﻿namespace TorneoGallito.Models
+namespace TorneoGallito.Models;
+// PROVISIONAL: reemplazar por entidad oficial de Seguridad.
+public class Usuario
 {
-    public class Usuario
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        public string NombreCompleto { get; set; }
-        public int RolId { get; set; }
-        public bool Activo { get; set; }
-
-        public Rol Rol { get; set; } = null!;
-    }
+    public int Id { get; set; }
+    public string Username { get; set; } = string.Empty;
 }
