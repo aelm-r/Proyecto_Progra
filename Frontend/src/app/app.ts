@@ -4,9 +4,10 @@ import { Sorteo } from './tv/sorteo/sorteo';
 import { Proxcombate } from './tv/proxcombate/proxcombate';
 import { Combatevivo } from './tv/combatevivo/combatevivo';
 import { Resultado } from './tv/resultado/resultado';
+import { Rotacion } from './tv/rotacion/rotacion';
 @Component({
   selector: 'app-root',
-  imports: [Bienvenida, Sorteo, Proxcombate, Combatevivo, Resultado],
+  imports: [Bienvenida, Sorteo, Proxcombate, Combatevivo, Resultado, Rotacion],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -54,7 +55,7 @@ export class App {
     robot: 'IT'
   }
 ];
-estadoActual = 'resultado';
+estadoActual = 'rotacion';
 
 cambiarEstado(nuevoEstado: string) {
   this.estadoActual = nuevoEstado;
