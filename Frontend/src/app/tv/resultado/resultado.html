@@ -1,0 +1,62 @@
+
+<div class="contenedor-resultado">
+  <div class="fuegos-artificiales" aria-hidden="true">
+  <div class="fuego fuego-1"></div>
+  <div class="fuego fuego-2"></div>
+  <div class="fuego fuego-3"></div>
+  <div class="fuego fuego-4"></div>
+  <div class="fuego fuego-5"></div>
+</div>
+
+  <div class="encabezado">
+    <h1>¡GANADOR!</h1>
+
+    <div class="informacion">
+      <span>{{ fase }}</span>
+      <span>COMBATE {{ numeroCombate }}</span>
+    </div>
+  </div>
+
+  <!-- Presentación del ganador -->
+  <div class="tarjeta-ganador">
+
+    <div class="trofeo">🏆</div>
+
+    <div class="etiqueta-ganador">
+      EQUIPO GANADOR
+    </div>
+
+    <h2>{{ ganador.nombre }}</h2>
+
+    <p>ROBOT</p>
+    <h3>{{ ganador.robot }}</h3>
+
+  </div>
+
+  <!-- Marcador final -->
+  <div class="marcador">
+
+    <div class="participante">
+      <h4>{{ equipoA.nombre }}</h4>
+      <span>{{ equipoA.puntos }}</span>
+    </div>
+
+    <div class="separador">-</div>
+
+    <div class="participante">
+      <h4>{{ equipoB.nombre }}</h4>
+      <span>{{ equipoB.puntos }}</span>
+    </div>
+
+  </div>
+
+  <!-- Motivo de victoria -->
+  <div class="motivo">
+    {{ motivoVictoria }}
+  </div>
+
+  <div class="mensaje-final">
+    ¡FELICIDADES AL EQUIPO GANADOR!
+  </div>
+
+</div>
