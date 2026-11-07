@@ -1,0 +1,49 @@
+
+<div class="pantalla-campeon">
+
+  <header class="encabezado">
+    <h1>🏆 TORNEO ROBOT GALLITO</h1>
+    <h2>¡TENEMOS CAMPEONES!</h2>
+    <p>RESULTADOS FINALES DEL TORNEO</p>
+  </header>
+
+  <main class="podio">
+
+    @for (participante of podio; track participante.posicion) {
+      <section
+        class="puesto"
+        [class.primer-lugar]="participante.posicion === 1"
+        [class.segundo-lugar]="participante.posicion === 2"
+        [class.tercer-lugar]="participante.posicion === 3"
+        [style.--color-equipo]="participante.color"
+      >
+
+        <div class="medalla">
+          {{ participante.emoji }}
+        </div>
+
+        <h3>{{ participante.titulo }}</h3>
+
+        <div class="robot">
+          {{ participante.logo }}
+        </div>
+
+        <div class="datos-equipo">
+          <h2>{{ participante.robot }}</h2>
+        </div>
+
+        <div class="base-podio">
+          {{ participante.posicion }}°
+        </div>
+
+      </section>
+    }
+
+  </main>
+
+  <footer class="pie">
+    <p>UNIVERSIDAD DE OCCIDENTE ROOSEVELT</p>
+    <p>FERIA TECNOLÓGICA 2026</p>
+  </footer>
+
+</div>

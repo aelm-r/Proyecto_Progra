@@ -8,15 +8,15 @@
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* <-- Cambiado a center para centrar verticalmente */
-  align-items: center;     /* <-- Centra horizontalmente todo el contenido */
+  justify-content: center;
+  align-items: center;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 
-/* Capa oscura de alta opacidad */
+/* Capa oscura */
 .capa-oscura {
   position: absolute;
   top: 0;
@@ -36,11 +36,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px; /* Espaciado uniforme entre los bloques rectangulares */
-  margin: auto; /* Ayuda a asegurar el centrado completo */
+  gap: 12px;
+  margin: auto;
 }
 
 /* Encabezado */
+.encabezado-rotacion {
+  animation: aparecer-arriba 0.8s ease-out both;
+}
+
 .encabezado-rotacion h1 {
   font-size: 44px;
   margin: 0 0 2px;
@@ -56,7 +60,7 @@
   font-weight: bold;
 }
 
-/* Grilla apilada verticalmente */
+/* Grilla */
 .grilla-rotacion {
   display: flex;
   flex-direction: column;
@@ -65,8 +69,9 @@
   align-items: center;
 }
 
-/* Tarjetas rectangulares anchas y proporcionadas */
-.seccion-tabla, .seccion-bracket {
+/* Tarjetas */
+.seccion-tabla,
+.seccion-bracket {
   width: 100%;
   max-width: 1350px;
   background: rgba(10, 10, 15, 0.94);
@@ -78,14 +83,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.seccion-tabla:nth-child(1) {
+  animation: entrar-izquierda 0.8s ease-out 0.2s both;
+}
+
+.seccion-tabla:nth-child(2) {
+  animation: entrar-derecha 0.8s ease-out 0.35s both;
 }
 
 .seccion-bracket {
   border: 3px solid #ffd700;
   box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+  animation: aparecer 0.8s ease-out 0.5s both;
 }
 
-.seccion-tabla h3, .seccion-bracket h3 {
+.seccion-tabla h3,
+.seccion-bracket h3 {
   font-size: 22px;
   margin: 0 0 6px 0;
   color: #ffd700;
@@ -93,7 +109,7 @@
   letter-spacing: 1px;
 }
 
-/* Tablas de Posiciones grandes y expandidas */
+/* Tablas de posiciones */
 .tabla-posiciones {
   width: 100%;
   border-collapse: collapse;
@@ -113,6 +129,7 @@
   font-size: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
+  transition: background 0.25s ease;
 }
 
 .tabla-posiciones tr.clasificado {
@@ -120,7 +137,11 @@
   font-weight: bold;
 }
 
-/* Sección del Bracket / Llaves con letras grandes */
+.tabla-posiciones tbody tr:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Llaves */
 .contenedor-llaves {
   width: 100%;
   display: grid;
@@ -136,6 +157,12 @@
   justify-content: space-between;
   align-items: center;
   border-left: 5px solid #ffd700;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.llave-item:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
 }
 
 .nombre-llave {
@@ -157,6 +184,7 @@
   position: relative;
   z-index: 2;
   margin-top: 8px;
+  animation: aparecer 0.8s ease-out 0.7s both;
 }
 
 .pie-rotacion p {
@@ -166,10 +194,57 @@
   margin: 0;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-  animation: parpadeo 1.5s infinite;
+  animation: parpadeo 2s infinite;
+}
+
+/* Animaciones */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aparecer-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entrar-izquierda {
+  from {
+    opacity: 0;
+    transform: translateX(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes entrar-derecha {
+  from {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes parpadeo {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }

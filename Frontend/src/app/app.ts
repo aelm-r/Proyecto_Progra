@@ -5,9 +5,10 @@ import { Proxcombate } from './tv/proxcombate/proxcombate';
 import { Combatevivo } from './tv/combatevivo/combatevivo';
 import { Resultado } from './tv/resultado/resultado';
 import { Rotacion } from './tv/rotacion/rotacion';
+import { Campeon } from './tv/campeon/campeon';
 @Component({
   selector: 'app-root',
-  imports: [Bienvenida, Sorteo, Proxcombate, Combatevivo, Resultado, Rotacion],
+  imports: [Bienvenida, Sorteo, Proxcombate, Combatevivo, Resultado, Rotacion, Campeon],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -55,7 +56,7 @@ export class App {
     robot: 'IT'
   }
 ];
-estadoActual = 'rotacion';
+estadoActual = 'rotacion'; // Estado inicial
 
 cambiarEstado(nuevoEstado: string) {
   this.estadoActual = nuevoEstado;

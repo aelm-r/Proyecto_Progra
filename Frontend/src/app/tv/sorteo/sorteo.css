@@ -4,11 +4,55 @@
   color: white;
 }
 
+/* Título */
 h1 {
   font-size: 60px;
   margin-bottom: 35px;
+  animation: aparecer-arriba 0.8s ease-out both;
 }
 
+/* Botones */
+.boton-iniciar {
+  padding: 15px 35px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  background: #0077cc;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  animation: aparecer 0.7s ease-out 0.2s both;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.boton-iniciar:hover {
+  background: #0099ff;
+  transform: scale(1.05);
+}
+
+/* Equipo que está siendo sorteado */
+.equipo-destacado {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid #ffd700;
+  border-radius: 15px;
+  padding: 12px 35px;
+  margin: 0 auto 20px;
+  width: fit-content;
+  animation: destacar 0.5s ease-out both;
+}
+
+.equipo-destacado h2 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.equipo-destacado p {
+  font-size: 22px;
+  margin: 5px 0 0;
+}
+
+/* Grupos */
 .grupos {
   display: flex;
   gap: 60px;
@@ -24,10 +68,12 @@ h1 {
 
 .grupo-a {
   border: 3px solid #00aaff;
+  animation: aparecer-izquierda 0.8s ease-out both;
 }
 
 .grupo-b {
   border: 3px solid #ff3333;
+  animation: aparecer-derecha 0.8s ease-out both;
 }
 
 .grupo h2 {
@@ -35,11 +81,18 @@ h1 {
   margin-bottom: 25px;
 }
 
+/* Tarjetas de equipos */
 .tarjeta-equipo {
   padding: 15px;
   margin-bottom: 15px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 10px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.tarjeta-equipo:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
 }
 
 .tarjeta-equipo h3 {
@@ -51,61 +104,71 @@ h1 {
   font-size: 22px;
   margin: 5px 0 0;
 }
-.boton-iniciar {
-    padding: 15px 35px;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    background: #0077cc;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-bottom: 25px;
+
+/* Mensaje de finalización */
+.mensaje-final {
+  font-size: 30px;
+  color: #ffd700;
+  margin-top: 20px;
+  animation: destacar 0.7s ease-out both;
 }
 
-.boton-iniciar:hover {
-    background: #0099ff;
-}
-
-.equipo-destacado {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffd700;
-    border-radius: 15px;
-    padding: 12px 35px;
-    margin: 0 auto 20px;
-    width: fit-content;
-}
-
-.equipo-destacado h2 {
-    font-size: 32px;
-    margin: 0;
-}
-
-.equipo-destacado p {
-    font-size: 22px;
-    margin: 5px 0 0;
-}
-
+/* Animaciones */
 .animacion-entrada {
-    animation: aparecer 0.7s ease-out;
+  animation: aparecer 0.7s ease-out both;
 }
 
 @keyframes aparecer {
-
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.mensaje-final {
-    font-size: 30px;
-    color: #ffd700;
-    margin-top: 20px;
+@keyframes aparecer-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aparecer-izquierda {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aparecer-derecha {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes destacar {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

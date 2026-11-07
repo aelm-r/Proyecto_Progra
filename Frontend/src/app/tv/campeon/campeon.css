@@ -1,0 +1,253 @@
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pantalla-campeon {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 22px 60px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+
+  /* Animación general de entrada */
+  animation: entrada-pantalla 0.9s ease-out both;
+}
+
+/* ANIMACIONES DE ENTRADA */
+
+@keyframes entrada-pantalla {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes entrada-podio {
+  from {
+    opacity: 0;
+    transform: translateY(55px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ENCABEZADO */
+
+.encabezado {
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  color: #dce8ff;
+}
+
+.encabezado h2 {
+  margin: 8px 0 4px;
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffd700;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.7),
+    0 0 30px rgba(255, 215, 0, 0.35);
+}
+
+.encabezado p {
+  margin: 0;
+  font-size: 21px;
+  letter-spacing: 4px;
+  color: #9eabc5;
+}
+
+/* PODIO */
+
+
+.podio {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 35px;
+
+  flex: 0 1 auto;
+  min-height: 0;
+
+  padding: 12px 0 8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+
+/* PUESTOS */
+
+.puesto {
+  --color-equipo: #ffffff;
+
+  width: 30%;
+  max-width: 380px;
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding: 18px 16px 0;
+  box-sizing: border-box;
+
+  border: 2px solid var(--color-equipo);
+  border-radius: 22px;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-equipo) 12%, #111a30),
+    rgba(8, 13, 27, 0.95)
+  );
+
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--color-equipo) 25%, transparent),
+    inset 0 0 25px color-mix(in srgb, var(--color-equipo) 8%, transparent);
+
+  animation: entrada-podio 0.8s ease-out both;
+}
+
+.segundo-lugar {
+  min-height: 340px;
+  animation-delay: 0.25s;
+}
+
+.primer-lugar {
+  min-height: 430px;
+  border-width: 3px;
+  box-shadow:
+    0 0 25px rgba(255, 215, 0, 0.4),
+    0 0 60px rgba(255, 215, 0, 0.15),
+    inset 0 0 35px rgba(255, 215, 0, 0.12);
+  animation-delay: 0.4s;
+}
+
+.tercer-lugar {
+  min-height: 310px;
+  animation-delay: 0.55s;
+}
+
+/* MEDALLAS */
+
+.medalla {
+  font-size: 60px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 12px var(--color-equipo));
+}
+
+.primer-lugar .medalla {
+  font-size: 80px;
+}
+
+.puesto h3 {
+  margin: 0 0 14px;
+  font-size: 23px;
+  font-weight: 900;
+  text-align: center;
+  color: var(--color-equipo);
+  letter-spacing: 2px;
+}
+
+/* LOGOS DE LOS ROBOTS */
+
+.robot {
+  font-size: 70px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 15px var(--color-equipo));
+}
+
+.primer-lugar .robot {
+  font-size: 90px;
+}
+
+/* NOMBRE DEL ROBOT */
+
+.datos-equipo {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.datos-equipo h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/* BASE DEL PODIO */
+
+.base-podio {
+  width: calc(100% + 32px);
+  padding: 9px 0;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 900;
+  color: #080d1b;
+  border-radius: 0 0 19px 19px;
+  background: var(--color-equipo);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* PIE DE PANTALLA */
+
+.pie {
+  width: auto;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 12px 35px;
+  color: #ffffff;
+  letter-spacing: 3px;
+
+  background: rgba(5, 10, 25, 0.82);
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  border-radius: 14px;
+
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
+}
+
+.pie p {
+  margin: 4px 0;
+  font-size: 18px;
+  font-weight: 800;
+  text-shadow: 0 2px 4px #000000;
+}
+
+/* ACCESIBILIDAD: REDUCIR MOVIMIENTO SI SE SOLICITA */
+
+@media (prefers-reduced-motion: reduce) {
+  .pantalla-campeon,
+  .puesto {
+    animation: none;
+  }
+}
