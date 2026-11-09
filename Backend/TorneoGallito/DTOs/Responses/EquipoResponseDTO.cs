@@ -1,15 +1,10 @@
-namespace TorneoGallito.DTOs.Responses
+namespace TorneoGallito.DTOs.Responses;
+// PROVISIONAL: coordinar contrato definitivo con Catálogos y Frontend.
+public class EquipoResponseDTO
 {
-    public class EquipoResponseDTO
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = string.Empty;
-        public string? Lema { get; set; }
-        public string ColorHex { get; set; } = string.Empty;
-        public string? LogoUrl { get; set; }
-        public string? Grupo { get; set; }            // null antes del sorteo
-        public int? PosicionSorteo { get; set; }
-        public RobotResponseDTO? Robot { get; set; }
-        public List<IntegranteResponseDTO> Integrantes { get; set; } = new();
-    }
+    public int Id { get; set; }
+    public string Nombre { get; set; } = string.Empty;
+    public string ColorHex { get; set; } = string.Empty;
+    public string? LogoUrl { get; set; }
+    public string? Robot { get; set; }
 }

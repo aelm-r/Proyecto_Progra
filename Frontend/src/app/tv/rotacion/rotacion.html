@@ -1,0 +1,100 @@
+<div 
+  class="contenedor-rotacion" 
+  [ngStyle]="{'background-image': 'url(' + imagenFondo() + ')'}">
+  
+  <div class="capa-oscura"></div>
+
+  <div class="contenido-rotacion">
+
+    <!-- Encabezado -->
+    <div class="encabezado-rotacion">
+      <h1>ESTADO DEL TORNEO</h1>
+      <p class="subtitulo-rotacion">ROTACIÓN OFICIAL — FASE DE GRUPOS Y LLAVES</p>
+    </div>
+
+    <!-- Grilla de contenido (Grupos A y B + Bracket) -->
+    <div class="grilla-rotacion">
+
+      <!-- Grupo A -->
+      <div class="seccion-tabla">
+        <h3>GRUPO A</h3>
+        <table class="tabla-posiciones">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Equipo</th>
+              <th>Pts</th>
+              <th>DG</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (eq of grupoA(); track eq.posicion) {
+              <tr [class.clasificado]="eq.posicion <= 2">
+                <td>{{ eq.posicion }}</td>
+                <td>{{ eq.nombre }}</td>
+                <td>{{ eq.puntos }}</td>
+                <td>{{ eq.diferenciaAsaltos }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Grupo B -->
+      <div class="seccion-tabla">
+        <h3>GRUPO B</h3>
+        <table class="tabla-posiciones">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Equipo</th>
+              <th>Pts</th>
+              <th>DG</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (eq of grupoB(); track eq.posicion) {
+              <tr [class.clasificado]="eq.posicion <= 2">
+                <td>{{ eq.posicion }}</td>
+                <td>{{ eq.nombre }}</td>
+                <td>{{ eq.puntos }}</td>
+                <td>{{ eq.diferenciaAsaltos }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Llaves / Semifinales y Final -->
+      <div class="seccion-bracket">
+        <h3>FASE ELIMINATORIA</h3>
+        <div class="contenedor-llaves">
+          <div class="llave-item">
+            <span class="nombre-llave">Semifinal 1</span>
+            <span class="equipos-llave">{{ semifinal1() }}</span>
+          </div>
+          <div class="llave-item">
+            <span class="nombre-llave">Semifinal 2</span>
+            <span class="equipos-llave">{{ semifinal2() }}</span>
+          </div>
+          <div class="llave-item">
+            <span class="nombre-llave">Tercer Lugar</span>
+            <span class="equipos-llave">{{ tercerLugar() }}</span>
+          </div>
+          <div class="llave-item" style="border-left-color: #ff3333;">
+            <span class="nombre-llave">Gran Final</span>
+            <span class="equipos-llave">{{ final() }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Pie de página -->
+  <div class="pie-rotacion">
+    <p>ESPERANDO LLAMADO A SIGUIENTE COMBATE...</p>
+  </div>
+
+</div>
