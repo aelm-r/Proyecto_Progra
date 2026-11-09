@@ -86,3 +86,46 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: .6rem; legend {
   .selector select { min-width: 0; width: 100%; }
 }
 @media (prefers-reduced-motion: no-preference) { .btn { transition: background .12s; } }
+
+
+
+/* 1. Estilos base para el fondo del panel */
+:host {
+  display: block;
+  background-image: url('/imagenes/fondo-gallito.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. Reglas específicas para Tablets (pantallas entre 600px y 1024px de ancho) */
+@media screen and (max-width: 1024px) {
+  :host {
+    /* Ajusta la posición del fondo para que el gallito quede centrado en pantallas más angostas */
+    background-position: 45% center !important; 
+  }
+
+  /* Si tienes un contenedor interno con las tarjetas o botones del juez, 
+     puedes adaptar su ancho aquí para que no se pegue a los bordes de la tablet */
+  .contenedor-principal-juez, 
+  .main-content, 
+  div[class*="container"] {
+    width: 92% !important;
+    margin: 0 auto !important;
+    padding: 15px !important;
+  }
+
+  /* Si las tarjetas de votación se ven muy pequeñas en filas, 
+     este código las fuerza a acomodarse en columnas más cómodas para el dedo */
+  .grid-juez, 
+  .row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+}
+
