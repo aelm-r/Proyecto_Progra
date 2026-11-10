@@ -103,7 +103,7 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: .6rem; legend {
 }
 
 /* 2. Reglas específicas para Tablets (pantallas entre 600px y 1024px de ancho) */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
   :host {
     /* Ajusta la posición del fondo para que el gallito quede centrado en pantallas más angostas */
     background-position: 45% center !important; 
@@ -114,9 +114,9 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: .6rem; legend {
   .contenedor-principal-juez, 
   .main-content, 
   div[class*="container"] {
-    width: 92% !important;
+    width: 100% !important;
     margin: 0 auto !important;
-    padding: 15px !important;
+    padding: 16px !important;
   }
 
   /* Si las tarjetas de votación se ven muy pequeñas en filas, 
@@ -125,7 +125,38 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: .6rem; legend {
   .row {
     display: flex !important;
     flex-direction: column !important;
-    gap: 15px !important;
+    gap: 16px !important;
   }
 }
 
+/* 1. Hacer visible y brillante el marcador central (1 - 0 y Asalto 2) */
+.marcador, 
+.score, 
+h1, h2, 
+span {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Mantener el texto oscuro únicamente dentro de las tarjetas y botones blancos */
+.card *, 
+button[style*="white"], 
+.btn-blanco {
+  color: #111827 !important;
+  text-shadow: none !important;
+}
+
+/* 2. Mejorar contraste de los botones oscuros/deshabilitados */
+button:disabled, 
+.btn-disabled {
+  background-color: rgba(15, 23, 42, 0.78) !important; /* Fondo azul oscuro semitransparente */
+  color: #cbd5e1 !important; /* Texto gris claro legible */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(4px); /* Efecto vidrio esmerilado */
+}
+
+/* 3. Mejorar contraste de los botones grises translúcidos (Pausa, Reanudar, W.O.) */
+button:not(:disabled) {
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
