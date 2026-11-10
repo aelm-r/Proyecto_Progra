@@ -1,6 +1,6 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: grupo_equipos. Llave compuesta (grupo_id, equipo_id). Lo llena sp_realizar_sorteo.
+    // Tabla: grupo_equipos. Llave compuesta (grupo_id, equipo_id)
     public class GrupoEquipo
     {
         public int GrupoId { get; set; }
