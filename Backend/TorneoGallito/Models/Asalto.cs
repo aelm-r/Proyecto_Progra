@@ -1,6 +1,6 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: asaltos. Abierto = FechaFin null. Los abre/cierra sp_iniciar_asalto / sp_cerrar_asalto.
+    
     public class Asalto
     {
         public int Id { get; set; }
