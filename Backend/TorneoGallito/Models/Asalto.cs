@@ -1,0 +1,18 @@
+namespace TorneoGallito.Models
+{
+    
+    public class Asalto
+    {
+        public int Id { get; set; }
+        public int CombateId { get; set; }
+        public int Numero { get; set; }               // único por combate
+        public bool EsMuerteSubita { get; set; }
+        public string? Resultado { get; set; }        // Constantes/ResultadosAsalto
+        public int? GanadorId { get; set; }           // NULL si nulo
+        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaFin { get; set; }
+
+        public Combate Combate { get; set; } = null!;
+        public Equipo? Ganador { get; set; }
+    }
+}

@@ -1,3 +1,4 @@
+
 .contenedor-proxcombate {
   width: 100%;
   min-height: 100vh;
@@ -15,11 +16,13 @@
   font-size: 60px;
   margin-bottom: 25px;
   text-transform: uppercase;
+  animation: aparecer-arriba 0.8s ease-out both;
 }
 
 /* Información del combate */
 .informacion-combate {
   margin-bottom: 45px;
+  animation: aparecer 0.8s ease-out 0.2s both;
 }
 
 .informacion-combate h2 {
@@ -55,20 +58,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .equipo-a {
   border: 3px solid #00aaff;
+  animation: entrar-izquierda 0.9s ease-out 0.3s both;
 }
 
 .equipo-b {
   border: 3px solid #ff3333;
+  animation: entrar-derecha 0.9s ease-out 0.3s both;
+}
+
+/* Iluminación de las tarjetas */
+.equipo-a:hover {
+  box-shadow: 0 0 25px rgba(0, 170, 255, 0.35);
+  background: rgba(0, 20, 35, 0.9);
+}
+
+.equipo-b:hover {
+  box-shadow: 0 0 25px rgba(255, 51, 51, 0.35);
+  background: rgba(35, 0, 0, 0.9);
 }
 
 /* Logo o emoji del equipo */
 .logo-equipo {
   font-size: 100px;
   margin-bottom: 15px;
+  animation: aparecer 0.8s ease-out 0.7s both;
 }
 
 .equipo h2 {
@@ -88,11 +107,13 @@
   font-weight: bold;
   color: #ffd700;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+  animation: aparecer-escala 0.7s ease-out 0.6s both;
 }
 
 /* Mensaje inferior */
 .mensaje-combate {
   margin-top: 55px;
+  animation: aparecer-abajo 0.8s ease-out 0.8s both;
 }
 
 .mensaje-combate p {
@@ -103,19 +124,67 @@
   text-shadow: 0 0 12px rgba(0, 170, 255, 0.8);
 }
 
-/* Animación de entrada */
-.equipo {
-  animation: aparecer 0.8s ease-out;
-}
-
+/* Animaciones */
 @keyframes aparecer {
   from {
     opacity: 0;
-    transform: translateY(25px) scale(0.95);
   }
-
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aparecer-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entrar-izquierda {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes entrar-derecha {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aparecer-escala {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aparecer-abajo {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

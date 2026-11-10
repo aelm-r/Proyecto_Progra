@@ -1,0 +1,291 @@
+
+/* ===== PANTALLA DE RESULTADOS ===== */
+
+.contenedor-resultado {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 40px 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+
+  background: radial-gradient(
+    circle at center,
+    #1b2b45 0%,
+    #080d18 75%
+  );
+
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  font-family: 'Orbitron', Arial, sans-serif;
+}
+
+/* ===== ENCABEZADO ===== */
+
+.encabezado {
+  position: relative;
+  z-index: 2;
+}
+
+.encabezado h1 {
+  font-size: clamp(32px, 4vw, 65px);
+  color: #ffd700;
+  margin: 0 0 15px;
+
+  text-shadow: 0 0 25px #ffb700;
+  animation: aparecer 1s ease-out;
+}
+
+.informacion {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+/* ===== TARJETA DEL GANADOR ===== */
+
+.tarjeta-ganador {
+  position: relative;
+  z-index: 2;
+
+  width: min(650px, 90%);
+  padding: 35px 20px;
+
+  background: rgba(20, 35, 60, 0.94);
+  border: 3px solid #ffd700;
+  border-radius: 25px;
+
+  box-shadow:
+    0 0 25px rgba(255, 215, 0, 0.5),
+    inset 0 0 20px rgba(255, 215, 0, 0.1);
+
+  animation: entradaGanador 1.2s ease-out;
+}
+
+.trofeo {
+  font-size: 85px;
+  animation: flotar 2s ease-in-out infinite;
+}
+
+.etiqueta-ganador {
+  color: #ffd700;
+  font-size: 18px;
+  letter-spacing: 3px;
+  margin: 15px 0;
+}
+
+.tarjeta-ganador h2 {
+  font-size: clamp(30px, 4vw, 55px);
+  margin: 10px 0;
+  text-transform: uppercase;
+}
+
+.tarjeta-ganador p {
+  color: #b0bfd3;
+  margin: 15px 0 5px;
+}
+
+.tarjeta-ganador h3 {
+  color: #ffd700;
+  font-size: 26px;
+  margin: 0;
+}
+
+/* ===== MARCADOR FINAL ===== */
+
+.marcador {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+}
+
+.participante h4 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.participante span {
+  font-size: 60px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.separador {
+  font-size: 45px;
+  color: #ffffff;
+}
+
+/* ===== MENSAJES ===== */
+
+.motivo {
+  position: relative;
+  z-index: 2;
+  color: #cbd5e1;
+  font-size: 20px;
+}
+
+.mensaje-final {
+  position: relative;
+  z-index: 2;
+  color: #ffd700;
+  font-size: 23px;
+  font-weight: bold;
+  animation: brillo 2s ease-in-out infinite;
+}
+
+/* ===== FUEGOS ARTIFICIALES ===== */
+
+.fuegos-artificiales {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fuego {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0;
+  background: #ffd700;
+
+  box-shadow:
+    0 -65px #ffd700,
+    46px -46px #ff5733,
+    65px 0 #00d9ff,
+    46px 46px #ffd700,
+    0 65px #ff5733,
+    -46px 46px #00d9ff,
+    -65px 0 #ffd700,
+    -46px -46px #ff5733;
+
+  animation: explosion 2.5s ease-out infinite;
+}
+
+.fuego-1 {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.fuego-2 {
+  top: 25%;
+  left: 80%;
+  animation-delay: 0.5s;
+}
+
+.fuego-3 {
+  top: 65%;
+  left: 12%;
+  animation-delay: 1s;
+}
+
+.fuego-4 {
+  top: 70%;
+  left: 85%;
+  animation-delay: 1.5s;
+}
+
+.fuego-5 {
+  top: 12%;
+  left: 50%;
+  animation-delay: 2s;
+}
+
+/* ===== ANIMACIONES ===== */
+
+@keyframes explosion {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  65% {
+    transform: scale(2.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+@keyframes entradaGanador {
+  from {
+    opacity: 0;
+    transform: translateY(70px) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flotar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes brillo {
+  0%, 100% {
+    text-shadow: 0 0 5px #ffd700;
+  }
+
+  50% {
+    text-shadow:
+      0 0 20px #ffd700,
+      0 0 40px #ff9900;
+  }
+}
+
+/* Reducir animaciones si el usuario lo solicita */
+@media (prefers-reduced-motion: reduce) {
+  .fuego {
+    display: none;
+  }
+
+  .trofeo,
+  .mensaje-final,
+  .encabezado h1,
+  .tarjeta-ganador {
+    animation: none;
+  }
+}

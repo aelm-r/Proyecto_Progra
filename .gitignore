@@ -1,3 +1,7 @@
+# Ignorar carpetas de salida de compilacion de .NET
+**/[Bb]in/
+**/[Oo]bj/
+
 # Visual Studio
 .vs/
 .vscode/
