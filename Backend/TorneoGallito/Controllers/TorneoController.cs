@@ -19,8 +19,7 @@ namespace TorneoGallito.Controllers
         {
             _torneoService = torneoService;
         }
-
-        // POST: api/torneo/sorteo -> una sola vez, con exactamente 8 equipos con robot. Crea los 16 combates.
+        // POST: api/torneo/sorteo 1 sola vez, con exactamente 8 equipos 
         [HttpPost("sorteo")]
         public ActionResult<SorteoResponseDTO> RealizarSorteo()
         {
