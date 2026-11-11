@@ -52,7 +52,6 @@ namespace TorneoGallito.Data
                 e.HasOne(c => c.EquipoB).WithMany().HasForeignKey(c => c.EquipoBId).OnDelete(DeleteBehavior.Restrict);
                 e.HasOne(c => c.Ganador).WithMany().HasForeignKey(c => c.GanadorId).OnDelete(DeleteBehavior.Restrict);
                 e.HasOne(c => c.UsuarioActualizo).WithMany().HasForeignKey(c => c.ActualizadoPor).OnDelete(DeleteBehavior.Restrict);
-                e.Property(c => c.MotivoCambio).HasMaxLength(300);
             });
 
             modelBuilder.Entity<Asalto>()

@@ -8,7 +8,6 @@
         public string? ValorAnterior { get; set; }
         public string? ValorNuevo { get; set; }
         public int? UsuarioId { get; set; }
-        public string? Motivo { get; set; }
         public DateTime FechaCambio { get; set; }
 
         public Combate Combate { get; set; } = null;

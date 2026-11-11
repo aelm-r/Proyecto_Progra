@@ -1,35 +1,23 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.OpenApi;
 using TorneoGallito.Data;
 using TorneoGallito.DTOs.Responses;
 using TorneoGallito.Middleware;
 using TorneoGallito.Services;
 using TorneoGallito.Services.Interfaces;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuración de controladores y respuestas de error
-builder.Services.AddControllers()
-    .ConfigureApiBehaviorOptions(options =>
-    {
-        options.InvalidModelStateResponseFactory = context =>
-        {
-            var errores = context.ModelState
-                .Where(e => e.Value!.Errors.Count > 0)
-                .ToDictionary(e => e.Key, e => e.Value!.Errors.Select(x => x.ErrorMessage).ToArray());
-            return new BadRequestObjectResult(new MensajeResponseDTO("Datos inválidos.", errores));
-        };
-    });
-
-// 2. Conexión a PostgreSQL con el formato Snake Case que pide el equipo
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("CadenaConexion"))
            .UseSnakeCaseNamingConvention());
 
-// 3. Inyección de los servicios de la arquitectura del torneo[cite: 6]
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEquipoService, EquipoService>();
@@ -38,10 +26,34 @@ builder.Services.AddScoped<ITorneoService, TorneoService>();
 builder.Services.AddScoped<ICombateService, CombateService>();
 builder.Services.AddScoped<IPublicService, PublicService>();
 
-// 4. Tu Seguridad: Configuración estricta del Token JWT
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errores = new Dictionary<string, string[]>();
+
+            foreach (var campo in context.ModelState)
+            {
+                if (campo.Value.Errors.Count > 0)
+                {
+                    var mensajes = new List<string>();
+                    foreach (var error in campo.Value.Errors)
+                    {
+                        mensajes.Add(error.ErrorMessage);
+                    }
+                    errores.Add(campo.Key, mensajes.ToArray());
+                }
+            }
+
+            return new BadRequestObjectResult(new MensajeResponseDTO("Datos inválidos.", errores));
+        };
+    });
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.MapInboundClaims = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -50,34 +62,52 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            RoleClaimType = "rol"
         };
     });
 builder.Services.AddAuthorization();
 
-// 5. Activación de Swagger limpio[cite: 6]
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Torneo Robot Gallito", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "Pega solo el token (sin la palabra Bearer)"
+    });
+    c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        { new OpenApiSecuritySchemeReference("Bearer", document), new List<string>() }
+    });
+});
 
-// 6. Configuración de CORS para Angular[cite: 6]
+var origenes = builder.Configuration.GetSection("Cors:Origenes").Get<string[]>();
+if (origenes == null)
+{
+    origenes = new string[] { "http://localhost:4200" };
+}
+
 builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins(builder.Configuration.GetSection("Cors:Origenes").Get<string[]>() ?? [])
+        policy.WithOrigins(origenes)
               .AllowAnyHeader()
               .AllowAnyMethod()));
 
 var app = builder.Build();
 
-// Pipeline de peticiones HTTP
 app.UseMiddleware<ManejoErroresMiddleware>();
 
-// Aquí se enciende la interfaz de Swagger web[cite: 6]
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseCors("Frontend");
-app.UseAuthentication(); // 1. Lee el token
-app.UseAuthorization();  // 2. Revisa permisos
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
+
 app.Run();

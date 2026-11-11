@@ -1,47 +1,52 @@
-﻿using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using TorneoGallito.DTOs.Responses;
 using TorneoGallito.Models;
-using TorneoGallito.Services.Interface;
+using TorneoGallito.Services.Interfaces;
 
 namespace TorneoGallito.Services
 {
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
-        private readonly SymmetricSecurityKey _key;
 
         public TokenService(IConfiguration config)
         {
             _config = config;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
         }
 
-        public string GenerarToken(Usuario usuario)
+        public LoginResponseDTO GenerarToken(Usuario usuario)
         {
-            var claims = new List<Claim>
+            var llaveSegura = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credenciales = new SigningCredentials(llaveSegura, SecurityAlgorithms.HmacSha256);
+
+            var claims = new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.Name, usuario.Username),
-                new Claim(ClaimTypes.Role, usuario.Rol?.Nombre?? "Juez")
+                new Claim("id", usuario.Id.ToString()),
+                new Claim("username", usuario.Username),
+                new Claim("rol", usuario.Rol.Nombre)
             };
 
-            var creds = new SigningCrdentials(_key. SecurityAlgorithms.HmacSha512Signature);
+            var expiracion = DateTime.UtcNow.AddHours(_config.GetValue<int>("Jwt:HorasExpiracion"));
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: expiracion,
+                signingCredentials: credenciales
+            );
+
+            return new LoginResponseDTO
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow,AddHours(8),
-                Issuer = _config["Jwt:Issuer"],
-                Audience = _config["Jwt:Audience"],
-                SigningCredentials = creds
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiracion = expiracion,
+                Username = usuario.Username,
+                NombreCompleto = usuario.NombreCompleto,
+                Rol = usuario.Rol.Nombre
             };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreatToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
         }
     }
 }

@@ -3,7 +3,6 @@ using Npgsql;
 using TorneoGallito.DTOs.Responses;
 using TorneoGallito.Exceptions;
 
-
 namespace TorneoGallito.Middleware
 {
     public class ManejoErroresMiddleware
@@ -11,7 +10,7 @@ namespace TorneoGallito.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ManejoErroresMiddleware> _logger;
 
-        public ManejoErroresMiddleware(RequestDelegate next, ILoggerFactory<ManejoErroresMiddleware> logger)
+        public ManejoErroresMiddleware(RequestDelegate next, ILogger<ManejoErroresMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -23,35 +22,99 @@ namespace TorneoGallito.Middleware
             {
                 await _next(context);
             }
-            catch (Exception ex) when (!context.Response.HasStarted)
+            catch (Exception ex)
             {
-                var (status, mensaje) = Traducir(ex);
-                if (status == StatusCodes.Status500InternalServerError)
+                if (context.Response.HasStarted)
+                {
+                    throw;
+                }
+
+                int codigo = StatusCodes.Status500InternalServerError;
+                string mensaje = "Error interno del servidor.";
+
+                if (ex is DatosInvalidosException)
+                {
+                    codigo = StatusCodes.Status400BadRequest;
+                    mensaje = ex.Message;
+                }
+                else if (ex is UnauthorizedAccessException)
+                {
+                    codigo = StatusCodes.Status401Unauthorized;
+                    mensaje = ex.Message;
+                }
+                else if (ex is NoEncontradoException)
+                {
+                    codigo = StatusCodes.Status404NotFound;
+                    mensaje = ex.Message;
+                }
+                else if (ex is ConflictoException)
+                {
+                    codigo = StatusCodes.Status409Conflict;
+                    mensaje = ex.Message;
+                }
+                else if (ex is PostgresException)
+                {
+                    PostgresException errorBD = (PostgresException)ex;
+                    codigo = CodigoDeErrorBD(errorBD);
+                    mensaje = MensajeDeErrorBD(errorBD);
+                }
+                else if (ex is DbUpdateException && ex.InnerException is PostgresException)
+                {
+                    PostgresException errorBD = (PostgresException)ex.InnerException;
+                    codigo = CodigoDeErrorBD(errorBD);
+                    mensaje = MensajeDeErrorBD(errorBD);
+                }
+
+                if (codigo == StatusCodes.Status500InternalServerError)
+                {
                     _logger.LogError(ex, "Error no controlado");
-                context.Response.StatusCode = status;
-                await context.Response.WriteAsync(new MensajeResponsableDTO(mensaje));
+                }
+
+                context.Response.StatusCode = codigo;
+                await context.Response.WriteAsJsonAsync(new MensajeResponseDTO(mensaje));
             }
         }
 
-        private static (int, string) Traducir(Exception ex) => ex switch
+        private static int CodigoDeErrorBD(PostgresException errorBD)
         {
-            DatosInvalidosExceptions e => (StatusCodes.Status400BadRequest, e.Message),
-            UnauthorizedAccessException e => (StatusCodes.Status401Unauthorized, e.Message),
-            NoEncontradoExceptions e => (StatusCodes.Status404NotFound, e.Message),
-            ConflictoExceptions e => (StatusCodes.Status409Conflict, e.Message),
-            PostgresException pg => TraducirPostgres(pg),
-            DbUpdateException { InnerException: PostgresException pg } => TraducirPostgres(pg),
-            NotImplementedException => (StatusCodes.Status501NotImplemented, "Este endpoint todavía no está implementado."),
-            _ => (StatusCodes.Status500InternalServerError, "Erron interno en el servidor.")
-        };
+            if (errorBD.SqlState == PostgresErrorCodes.RaiseException)
+            {
+                return StatusCodes.Status409Conflict;
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.UniqueViolation)
+            {
+                return StatusCodes.Status409Conflict;
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.ForeignKeyViolation)
+            {
+                return StatusCodes.Status409Conflict;
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.CheckViolation)
+            {
+                return StatusCodes.Status400BadRequest;
+            }
+            return StatusCodes.Status500InternalServerError;
+        }
 
-        private static (int, string) TraducirPostgres(PostgresException pg) => pg.SqlState switch
+        private static string MensajeDeErrorBD(PostgresException errorBD)
         {
-            PostgresErrorCodes.RaiseException => (StatusCodes.Status409Conflict, pg.MessageText),
-            PostgresErrorCodes.UniqueViolation => (StatusCodes.Status409Conflict, "Ya esxiste un registro con ese valor"),
-            PostgresErrorCodes.ForeignKeyViolation => (StatusCodes.Status409Conflict, "El registro está relacionado con otros datos"),
-            PostgresErrorCodes.CheckViolation => (StatusCodes.Status400BadRequest, "Un valor no cumple las reglas de la base de datos"),
-            _ => (StatusCodes.Status500InternalServerError, "Error de base de datos")
-        };
+            if (errorBD.SqlState == PostgresErrorCodes.RaiseException)
+            {
+                return errorBD.MessageText;
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.UniqueViolation)
+            {
+                return "Ya eixste un registro con ese valor.";
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.ForeignKeyViolation)
+            {
+                return "El registro está relacionado con otros datos.";
+            }
+            if (errorBD.SqlState == PostgresErrorCodes.CheckViolation)
+            {
+                return "Un valor no cumple las reglas de la base de dato.";
+            }
+            return "Error de base de datos.";
+        }
     }
 }
