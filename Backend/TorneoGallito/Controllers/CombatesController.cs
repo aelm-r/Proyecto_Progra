@@ -8,8 +8,8 @@ using TorneoGallito.Services.Interfaces;
 
 namespace TorneoGallito.Controllers
 {
-    // Escuadra: Torneo. Dirigir combates: Juez y Admin. Corregir y cancelar: solo Admin.
-    // El id del juez se lee del token con User.ObtenerUsuarioId(), nunca del body.
+    // Escuadra: Torneo. Dirigir combates: Juez y Admin. Corregir y cancelar
+    // El id del juez se lee del token con User.ObtenerUsuarioId(), 
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = Roles.AdminOJuez)]
