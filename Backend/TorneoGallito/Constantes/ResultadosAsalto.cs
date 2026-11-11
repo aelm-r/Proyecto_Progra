@@ -2,15 +2,15 @@ namespace TorneoGallito.Constantes
 {
     public static class ResultadosAsalto
     {
-        public const string Reventon = "reventon";          // gana quien reventó el globo
-        public const string Autogolpe = "autogolpe";        // gana el rival
-        public const string FueraArena = "fuera_arena";     // gana el rival
-        public const string Inmovil = "inmovil";            // gana el rival
-        public const string Sancion = "sancion";            // segunda  amonestacion del equipo: gana el rival
-        public const string Nulo = "nulo";                  // nadie gana
-        public const string DecisionJuez = "decision_juez"; //  muerte súbita eliminatoria
+        public const string Reventon = "reventon";          
+        public const string Autogolpe = "autogolpe";        
+        public const string FueraArena = "fuera_arena";     
+        public const string Inmovil = "inmovil";            
+        public const string Sancion = "sancion";            
+        public const string Nulo = "nulo";                  
+        public const string DecisionJuez = "decision_juez"; 
 
-        public static readonly string[] Todos = [Reventon, Autogolpe, FueraArena, Inmovil, Sancion, Nulo, DecisionJuez];
+        public static readonly string[] Todos = { Reventon, Autogolpe, FueraArena, Inmovil, Sancion, Nulo, DecisionJuez };
 
         public const int SegundosAsalto = 90;
         public const int SegundosMuerteSubita = 60;

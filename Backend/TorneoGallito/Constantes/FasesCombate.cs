@@ -7,9 +7,8 @@ namespace TorneoGallito.Constantes
         public const string TercerLugar = "tercer_lugar";
         public const string Final = "final";
 
-        public static readonly string[] Todas = [Grupos, Semifinal, TercerLugar, Final];
+        public static readonly string[] Todas = { Grupos, Semifinal, TercerLugar, Final };
 
-        // Valores q que devuelve fn_fase_evento()
         public const string EventoPreparacion = "preparacion";
         public const string EventoSorteoRealizado = "sorteo_realizado";
         public const string EventoGrupos = "grupos";

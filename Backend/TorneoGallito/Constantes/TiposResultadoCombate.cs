@@ -1,13 +1,16 @@
 namespace TorneoGallito.Constantes
 {
-    
     public static class TiposResultadoCombate
     {
-        public const string Asaltos = "asaltos";
-        public const string Empate = "empate";                 // solo en fase de grupos
-        public const string WalkOver = "wo";                   // un equipo no se presentó gana automaticamente el rival
-        public const string Descalificacion = "descalificacion";
+        public const string DecisionJuez = "decision_juez";
+        public const string Empate = "empate";
+        public const string WalkOver = "wo";
 
-        public static readonly string[] Todos = [Asaltos, Empate, WalkOver, Descalificacion];
+        public static readonly string[] Todos =
+        {
+            ResultadosAsalto.Reventon, ResultadosAsalto.Autogolpe, ResultadosAsalto.FueraArena,
+            ResultadosAsalto.Inmovil, ResultadosAsalto.Sancion, ResultadosAsalto.Nulo,
+            DecisionJuez, WalkOver, Empate
+        };
     }
 }
