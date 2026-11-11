@@ -1,6 +1,6 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: grupos (A y B)
+    
     public class Grupo
     {
         public int Id { get; set; }

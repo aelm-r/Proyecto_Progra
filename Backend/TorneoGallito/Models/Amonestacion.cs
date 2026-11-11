@@ -1,6 +1,5 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: amonestaciones. El equipo debe pertenecer al combate.
     public class Amonestacion
     {
         public int Id { get; set; }

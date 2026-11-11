@@ -1,6 +1,5 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: pausas_tecnicas. Una por equipo por combate, máximo 2 minutos, solo entre asaltos.
     public class PausaTecnica
     {
         public int Id { get; set; }
