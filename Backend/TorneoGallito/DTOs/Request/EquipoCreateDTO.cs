@@ -4,7 +4,7 @@ namespace TorneoGallito.DTOs.Request
 {
     public class EquipoCreateDTO
     {
-        // tambien deben coincidir con las columnas del diccionario de datos de BD
+        // aquitambien deben coincidir con las columnas del diccionario de datos de BD
         [Required(ErrorMessage = "El nombre del equipo es obligatorio.")]
         [StringLength(30, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 30 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
@@ -13,7 +13,7 @@ namespace TorneoGallito.DTOs.Request
         public string? Lema { get; set; }
 
         [Required(ErrorMessage = "El color es obligatorio.")]
-        [RegularExpression("^#[0-9A-Fa-f]{6}$", ErrorMessage = "El color debe tener el formato válido.")]
+        [RegularExpression("^#[0-9A-Fa-f]{6}$", ErrorMessage = "El color debe tener el formato válido.")]//esto es para que el color sea un hex valido, segun el requerimiento,
         public string ColorHex { get; set; } = string.Empty;
 
         [Url(ErrorMessage = "El logo debe ser una URL válida.")]
