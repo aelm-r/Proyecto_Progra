@@ -18,7 +18,7 @@ namespace TorneoGallito.Controllers
             _publicService = publicService;
         }
 
-        // GET: api/public/estado-evento -> todo lo de la TV en una llamada, con la hora del servidor
+        // GET: api/public/estado-evento, todo lo de la TV en una llamada, con la hora del servidor
         [HttpGet("estado-evento")]
         public ActionResult<EstadoEventoResponseDTO> ObtenerEstadoEvento()
         {
