@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TorneoGallito.DTOs.Request
 {
-    // El EquipoId viene enN la ruta: POST /api/equipos/{id}/integrantes
     public class IntegranteCreateDTO
     {
         [Required(ErrorMessage = "El nombre del integrante es obligatorio.")]
