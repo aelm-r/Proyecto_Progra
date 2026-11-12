@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TorneoGallito.DTOs.Request
 {
-    // El EquipoId viene en la ruta del POST /api/equipos/{id}/robot el robot esuno por equipo)
+    // El EquipoId viene en la ruta del POST /api/equipos/{id}/robot esuno por equipo)
     public class RobotCreateDTO
     {
         [Required(ErrorMessage = "El nombre del robot es obligatorio.")]

@@ -6,7 +6,7 @@ namespace TorneoGallito.DTOs.Request
     public class IntegranteCreateDTO
     {
         [Required(ErrorMessage = "El nombre del integrante es obligatorio.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 50 caracteres.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 100 caracteres.")]
 
 
         public string NombreCompleto { get; set; } = string.Empty;
