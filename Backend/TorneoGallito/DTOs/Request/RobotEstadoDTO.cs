@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TorneoGallito.DTOs.Request
 {
-    // está en /api/robots/{id}/estado para  (Admin o Juez)
     public class RobotEstadoDTO
     {
         
