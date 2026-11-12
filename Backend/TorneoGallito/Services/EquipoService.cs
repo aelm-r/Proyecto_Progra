@@ -14,7 +14,7 @@ namespace TorneoGallito.Services
     {
         private readonly AppDbContext _context;
 
-        // Inyectamos el contexto de la base de datos mediante el constructor
+        
         public EquipoService(AppDbContext context)
         {
             _context = context;
@@ -54,10 +54,15 @@ namespace TorneoGallito.Services
             var nuevoEquipo = new Equipo
             {
                 Nombre = nombre,
-                Lema = dto.Lema?.Trim(),
+                Lema = dto.Lema,
                 ColorHex = dto.ColorHex.ToUpper(),
                 LogoUrl = dto.LogoUrl
             };
+
+            if (dto.Lema != null)
+            {
+                nuevoEquipo.Lema = dto.Lema.Trim();
+            }
 
             _context.Equipos.Add(nuevoEquipo);
             _context.SaveChanges(); // ejecuta el INSERT
@@ -70,7 +75,7 @@ namespace TorneoGallito.Services
         {
             var equipoDB = BuscarEquipo(id);
 
-            // el nombre no puede repetirse con OTRO equipo (con él mismo sí, si no lo cambia)
+            // el nombre no puede repetirse con otro equipo 
             var nombre = dto.Nombre.Trim();
             if (_context.Equipos.Any(e => e.Id != id && e.Nombre.ToLower() == nombre.ToLower()))
             {
@@ -78,7 +83,11 @@ namespace TorneoGallito.Services
             }
 
             equipoDB.Nombre = nombre;
-            equipoDB.Lema = dto.Lema?.Trim();
+            equipoDB.Lema = dto.Lema;
+            if (dto.Lema != null)
+            {
+                equipoDB.Lema = dto.Lema.Trim();
+            }
             equipoDB.ColorHex = dto.ColorHex.ToUpper();
             equipoDB.LogoUrl = dto.LogoUrl;
 
@@ -93,10 +102,10 @@ namespace TorneoGallito.Services
 
             if (SorteoRealizado())
             {
-                throw new ConflictoException("Solo se pueden eliminar equipos antes del sorteo.");
+                throw new ConflictoException("Solo se pueden eliminar equipos antes dell sorteo.");
             }
 
-            // como BuscarEquipo trae sus integrantes y su robot, EF los borra junto con el equipo
+            
             _context.Equipos.Remove(equipoDB);
             _context.SaveChanges(); // ejecuta el DELETE
         }
@@ -141,11 +150,10 @@ namespace TorneoGallito.Services
             {
                 throw new NoEncontradoException("Equipo no encontrado");
             }
-
-            // regla del documento: un robot por equipo
+            //1 robot por equipo
             if (_context.Robots.Any(r => r.EquipoId == equipoId))
             {
-                throw new ConflictoException("Este equipo ya tiene un robot registrado. Edítalo con PUT /api/robots/{id}.");
+                throw new ConflictoException("Este equipo ya tiene un robot registrado.");
             }
 
             var nuevoRobot = new Robot
@@ -157,7 +165,7 @@ namespace TorneoGallito.Services
             };
 
             _context.Robots.Add(nuevoRobot);
-            _context.SaveChanges(); // ejecuta el INSERT
+            _context.SaveChanges(); 
 
             return new RobotResponseDTO
             {
@@ -169,16 +177,16 @@ namespace TorneoGallito.Services
             };
         }
 
-        // ---------- Métodos privados de apoyo ----------
+        
 
-        // Equipos con todo lo que necesita el DTO: integrantes, robot y grupo del sorteo
+        
         private IQueryable<Equipo> ConsultarEquipos()
         {
             return _context.Equipos
                 .Include(e => e.Integrantes)
                 .Include(e => e.Robot)
                 .Include(e => e.GrupoEquipo)
-                    .ThenInclude(g => g!.Grupo); // el ! es porque GrupoEquipo es null antes del sorteo
+                    .ThenInclude(g => g.Grupo);
         }
 
         private Equipo BuscarEquipo(int id)
@@ -191,9 +199,7 @@ namespace TorneoGallito.Services
             return equipo;
         }
 
-        // Si ya hay equipos en grupo_equipos, el sorteo ya se hizo.
-        // Cuando BD entregue fn_fase_evento() se puede cambiar por:
-        // _context.Database.SqlQuery<string>($"SELECT fn_fase_evento() AS \"Value\"").Single() != FasesCombate.EventoPreparacion
+        
         private bool SorteoRealizado()
         {
             return _context.GrupoEquipos.Any();
@@ -201,23 +207,13 @@ namespace TorneoGallito.Services
 
         private static EquipoResponseDTO ConvertirADTO(Equipo e)
         {
-            return new EquipoResponseDTO
+            var dto = new EquipoResponseDTO
             {
                 Id = e.Id,
                 Nombre = e.Nombre,
                 Lema = e.Lema,
                 ColorHex = e.ColorHex,
                 LogoUrl = e.LogoUrl,
-                Grupo = e.GrupoEquipo?.Grupo.Nombre,
-                PosicionSorteo = e.GrupoEquipo?.PosicionSorteo,
-                Robot = e.Robot == null ? null : new RobotResponseDTO
-                {
-                    Id = e.Robot.Id,
-                    EquipoId = e.Id,
-                    Nombre = e.Robot.Nombre,
-                    FotoUrl = e.Robot.FotoUrl,
-                    Estado = e.Robot.Estado
-                },
                 Integrantes = e.Integrantes
                     .OrderBy(i => i.NombreCompleto)
                     .Select(i => new IntegranteResponseDTO
@@ -228,6 +224,26 @@ namespace TorneoGallito.Services
                         Carne = i.Carne
                     }).ToList()
             };
+
+            if (e.GrupoEquipo != null)
+            {
+                dto.Grupo = e.GrupoEquipo.Grupo.Nombre;
+                dto.PosicionSorteo = e.GrupoEquipo.PosicionSorteo;
+            }
+
+            if (e.Robot != null)
+            {
+                dto.Robot = new RobotResponseDTO
+                {
+                    Id = e.Robot.Id,
+                    EquipoId = e.Id,
+                    Nombre = e.Robot.Nombre,
+                    FotoUrl = e.Robot.FotoUrl,
+                    Estado = e.Robot.Estado
+                };
+            }
+
+            return dto;
         }
     }
 }
