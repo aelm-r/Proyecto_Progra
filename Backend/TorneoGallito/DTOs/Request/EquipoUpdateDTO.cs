@@ -4,7 +4,6 @@ namespace TorneoGallito.DTOs.Request
 {
     public class EquipoUpdateDTO
     {
-        //  esta informacion debe coincidir con las columnas  de datos de BD
         [Required(ErrorMessage = "El nombre del equipo es obligatorio.")]
         [StringLength(30, MinimumLength = 2, ErrorMessage = "El nombre debe tener entre 2 y 30 caracteres.")]
 
