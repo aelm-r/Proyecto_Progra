@@ -8,11 +8,11 @@ namespace TorneoGallito.DTOs.Responses
         public string? Llave { get; set; }
         public string? Grupo { get; set; }
         public string Estado { get; set; } = string.Empty;
-        public EquipoResumenDTO? EquipoA { get; set; }   // null = por definir
+        public EquipoResumenDTO? EquipoA { get; set; }  
         public EquipoResumenDTO? EquipoB { get; set; }
         public int? GanadorId { get; set; }
         public string? TipoResultado { get; set; }
-        public string Marcador { get; set; } = "0 – 0"; // fn_marcador_combate
+        public string Marcador { get; set; } = "0 – 0"; 
         public DateTime? FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
         public List<AsaltoResponseDTO> Asaltos { get; set; } = new();
