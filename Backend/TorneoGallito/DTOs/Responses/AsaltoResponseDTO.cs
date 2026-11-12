@@ -5,10 +5,9 @@ namespace TorneoGallito.DTOs.Responses
         public int Id { get; set; }
         public int Numero { get; set; }
         public bool EsMuerteSubita { get; set; }
-        public string? Resultado { get; set; }        // null = asalto abierto
+        public string? Resultado { get; set; }       
         public int? GanadorId { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
-        public int DuracionMaximaSegundos { get; set; } // 90 o 60 (muerte súbita)
-    }
+        public int DuracionMaximaSegundos { get; set; } 
 }
