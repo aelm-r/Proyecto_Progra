@@ -1,6 +1,5 @@
 namespace TorneoGallito.DTOs.Responses
 {
-    // Versión corta de un equipo para la TV y los combates
     public class EquipoResumenDTO
     {
         public int Id { get; set; }

@@ -1,6 +1,5 @@
 namespace TorneoGallito.DTOs.Responses
 {
-    // La TV lo anima en el orden de la lista: A1, B1, A2, B2... (acordar con F1)
     public class SorteoResponseDTO
     {
         public bool Realizado { get; set; }

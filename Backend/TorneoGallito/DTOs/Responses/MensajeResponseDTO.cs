@@ -2,7 +2,6 @@
 
 namespace TorneoGallito.DTOs.Responses
 {
-    // guiandonos por el pdf el ormato para los errores 400/401/403/404/409
     public class MensajeResponseDTO
     {
         public string Mensaje { get; set; } = string.Empty;

@@ -1,6 +1,5 @@
 namespace TorneoGallito.DTOs.Responses
 {
-    // Lo que devuelven GET /api/combates y todas las acciones del juez (estado actualizado)
     public class CombateResponseDTO
     {
         public int Id { get; set; }
