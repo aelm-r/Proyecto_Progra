@@ -1,6 +1,6 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: equipos
+    
     public class Equipo
     {
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace TorneoGallito.Models
         public Robot? Robot { get; set; }              
         public GrupoEquipo? GrupoEquipo { get; set; }   
 
-        //constructor
+        
         public Equipo(int id, string nombre, string? lema, string colorHex, string? logoUrl)
         {
             Id = id;

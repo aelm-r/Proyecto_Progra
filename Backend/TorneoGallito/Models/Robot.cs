@@ -1,6 +1,6 @@
 namespace TorneoGallito.Models
 {
-    // Tabla: robots. 
+    
     public class Robot
     {
         public int Id { get; set; }
@@ -11,7 +11,7 @@ namespace TorneoGallito.Models
 
         public Equipo Equipo { get; set; } = null!;
 
-        //constructor 
+         
         public Robot(int id, int equipoId, string nombre, string? fotoUrl, string estado)
         {
             Id = id;
