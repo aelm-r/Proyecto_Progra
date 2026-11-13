@@ -41,7 +41,7 @@ export class AppTv implements OnInit, OnDestroy {
   // Último estado recibido desde el backend.
   estadoEvento: EstadoEvento | null = null;
 
-  // Pantalla que se mostrará actualmente.
+  // Pantalla indicada por el backend.
   estadoActual = 'bienvenida';
 
   ngOnInit(): void {
@@ -56,81 +56,11 @@ export class AppTv implements OnInit, OnDestroy {
       )
     ).subscribe(estado => {
       this.estadoEvento = estado;
-      this.actualizarPantalla(estado);
+      this.estadoActual = estado.pantallaActual;
     });
   }
 
   ngOnDestroy(): void {
     this.suscripcion?.unsubscribe();
-  }
-
-  private actualizarPantalla(estado: EstadoEvento): void {
-
-    const fase = estado.fase.toLowerCase();
-
-    // El torneo todavía está en preparación.
-    if (fase === 'preparacion') {
-      this.estadoActual = 'bienvenida';
-      return;
-    }
-
-    // Mostrar el sorteo cuando el backend indique que ya se realizó.
-    if (fase === 'sorteo_realizado') {
-      this.estadoActual = 'sorteo';
-      return;
-    }
-
-    // Si hay un combate activo, mostrarlo.
-    if (estado.combateEnCurso !== null) {
-      this.estadoActual = 'combatevivo';
-      return;
-    }
-
-    // Mostrar el último resultado durante 15 segundos.
-    if (estado.ultimoFinalizado?.fechaFin) {
-      const horaServidor = new Date(estado.horaServidor).getTime();
-      const horaFinalizacion = new Date(
-        estado.ultimoFinalizado.fechaFin
-      ).getTime();
-
-      const segundosDesdeFinalizacion =
-        horaServidor - horaFinalizacion;
-
-      if (
-        segundosDesdeFinalizacion >= 0 &&
-        segundosDesdeFinalizacion <= 15000
-      ) {
-        this.estadoActual = 'resultado';
-        return;
-      }
-    }
-
-    // Mostrar el siguiente combate si está programado.
-    if (estado.siguienteCombate !== null) {
-      this.estadoActual = 'proxcombate';
-      return;
-    }
-
-    // Si no hay otro combate, mostrar la información de la fase.
-    if (fase === 'grupos') {
-      this.estadoActual = 'rotacion';
-      return;
-    }
-
-    if (fase === 'eliminatoria') {
-      this.estadoActual = 'eliminatoria';
-      return;
-    }
-
-    if (fase === 'finalizado') {
-      this.estadoActual = 'campeon';
-      return;
-    }
-
-    this.estadoActual = 'bienvenida';
-  }
-
-  cambiarEstado(nuevoEstado: string): void {
-    this.estadoActual = nuevoEstado;
   }
 }

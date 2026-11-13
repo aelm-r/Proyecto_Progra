@@ -28,9 +28,9 @@
               </span>
 
               <span class="equipos-llave">
-                {{ combate.equipoA }}
+                {{ combate.equipoA?.nombre ?? combate.equipoANombre }}
                 VS
-                {{ combate.equipoB }}
+                {{ combate.equipoB?.nombre ?? combate.equipoBNombre }}
               </span>
 
               <span class="marcador-llave">

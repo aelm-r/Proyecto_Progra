@@ -11,17 +11,18 @@
         <h2>
           COMBATE {{ combate.numeroOrden }} DE {{ estado().totalCombates }}
         </h2>
-        <p>{{ combate.fase }}</p>
+        <p>{{ combate.faseNombre }}</p>
       </div>
     </div>
 
-    <!-- Información del asalto -->
+    <!-- Informacion del asalto -->
     <div class="informacion-ronda">
       @if (combate.asaltoActual?.esMuerteSubita) {
         <h2 class="titulo-muerte-subita">MUERTE SÚBITA</h2>
       } @else {
         <h2>
           RONDA {{ combate.asaltoActual?.numero ?? '--' }}
+          DE {{ combate.totalAsaltos }}
         </h2>
       }
     </div>
@@ -30,7 +31,7 @@
     <div
       class="temporizador"
       [class.temporizador-muerte-subita]="combate.asaltoActual?.esMuerteSubita ?? false">
-      <span>--</span>
+      <span>{{ combate.tiempoRestanteSegundos ?? '--' }}</span>
     </div>
 
     <!-- Enfrentamiento -->

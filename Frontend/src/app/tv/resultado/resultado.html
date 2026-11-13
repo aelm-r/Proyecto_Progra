@@ -14,7 +14,7 @@
       <h1>¡RESULTADO!</h1>
 
       <div class="informacion">
-        <span>{{ combate.fase }}</span>
+        <span>{{ combate.faseNombre }}</span>
         <span>COMBATE {{ combate.numeroOrden }}</span>
       </div>
     </div>
@@ -28,7 +28,19 @@
         EQUIPO GANADOR
       </div>
 
-      <h2>GANADOR NO DISPONIBLE</h2>
+      @if (combate.ganador; as ganador) {
+        <div class="ganador-equipo">
+          @if (ganador.logoUrl) {
+            <img
+              class="logo-equipo"
+              [src]="ganador.logoUrl"
+              [alt]="'Logo de ' + ganador.nombre">
+          }
+          <h2>{{ ganador.nombre }}</h2>
+        </div>
+      } @else {
+        <h2>GANADOR NO DISPONIBLE</h2>
+      }
 
       <p>RESULTADO</p>
       <h3>{{ combate.tipoResultado ?? 'NO DISPONIBLE' }}</h3>
