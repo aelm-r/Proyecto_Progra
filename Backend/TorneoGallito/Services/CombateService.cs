@@ -539,6 +539,7 @@ namespace TorneoGallito.Services
                 Id = combate.Id,
                 NumeroOrden = combate.NumeroOrden,
                 Fase = combate.Fase,
+                FaseNombre = FasesCombate.NombreLegible(combate.Fase),
                 Llave = combate.Llave,
                 Estado = combate.Estado,
                 EquipoA = ConvertirEquipo(combate.EquipoA),
@@ -555,6 +556,18 @@ namespace TorneoGallito.Services
             if (combate.Grupo != null)
             {
                 dto.Grupo = combate.Grupo.Nombre;
+            }
+
+            if (combate.GanadorId != null)
+            {
+                if (combate.GanadorId == combate.EquipoAId)
+                {
+                    dto.Ganador = dto.EquipoA;
+                }
+                else if (combate.GanadorId == combate.EquipoBId)
+                {
+                    dto.Ganador = dto.EquipoB;
+                }
             }
 
             foreach (var asalto in combate.Asaltos.OrderBy(a => a.Numero))

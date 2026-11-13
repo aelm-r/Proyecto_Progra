@@ -14,5 +14,6 @@ namespace TorneoGallito.Constantes
 
         public const int SegundosAsalto = 90;
         public const int SegundosMuerteSubita = 60;
+        public const int TotalAsaltos = 3;
     }
 }

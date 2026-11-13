@@ -3,7 +3,8 @@ namespace TorneoGallito.DTOs.Responses
     public class EstadoEventoResponseDTO
     {
         public DateTime HoraServidor { get; set; }              
-        public string Fase { get; set; } = string.Empty;          
+        public string Fase { get; set; } = string.Empty;
+        public string PantallaActual { get; set; } = string.Empty;
         public List<EquipoResponseDTO> Equipos { get; set; } = new();   
         public SorteoResponseDTO Sorteo { get; set; } = new();          
         public CombateEnVivoResponseDTO? CombateEnCurso { get; set; }   
