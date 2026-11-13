@@ -1,19 +1,25 @@
-<div class = "contenido-bienvenida">
-
+<div class="contenido-bienvenida">
   <h1>{{ titulo }}</h1>
   <h2>{{ universidad }}</h2>
   <p>{{ evento }}</p>
 
   <div class="equipos">
-
-    @for (equipo of equipos; track equipo.nombre) {
-
+    @for (equipo of estado().equipos; track equipo.id) {
       <div class="equipo">
+
+        @if (equipo.logoUrl) {
+          <img
+            class="logo-equipo"
+            [src]="equipo.logoUrl"
+            [alt]="'Logo de ' + equipo.nombre">
+        } @else {
+          <div class="logo-pendiente">🤖</div>
+        }
+
         <h3>{{ equipo.nombre }}</h3>
-        <p>{{ equipo.robot }}</p>
+        <p>{{ equipo.robot?.nombre ?? 'Robot pendiente' }}</p>
+
       </div>
-
     }
-
   </div>
 </div>

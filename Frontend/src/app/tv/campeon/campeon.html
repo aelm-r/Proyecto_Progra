@@ -1,4 +1,3 @@
-
 <div class="pantalla-campeon">
 
   <header class="encabezado">
@@ -7,39 +6,97 @@
     <p>RESULTADOS FINALES DEL TORNEO</p>
   </header>
 
-  <main class="podio">
+  @if (estado().podio; as podio) {
 
-    @for (participante of podio; track participante.posicion) {
-      <section
-        class="puesto"
-        [class.primer-lugar]="participante.posicion === 1"
-        [class.segundo-lugar]="participante.posicion === 2"
-        [class.tercer-lugar]="participante.posicion === 3"
-        [style.--color-equipo]="participante.color"
-      >
+    <main class="podio">
 
-        <div class="medalla">
-          {{ participante.emoji }}
-        </div>
+      <!-- Segundo lugar -->
+      <section class="puesto segundo-lugar">
 
-        <h3>{{ participante.titulo }}</h3>
+        <div class="medalla">🥈</div>
+
+        <h3>SEGUNDO LUGAR</h3>
 
         <div class="robot">
-          {{ participante.logo }}
+          @if (podio.segundo?.logoUrl) {
+            <img
+              [src]="podio.segundo.logoUrl"
+              [alt]="'Logo de ' + podio.segundo.nombre">
+          } @else {
+            —
+          }
         </div>
 
         <div class="datos-equipo">
-          <h2>{{ participante.robot }}</h2>
+          <h2>{{ podio.segundo?.nombre ?? 'PENDIENTE' }}</h2>
+          <p>{{ podio.segundo?.robot ?? 'Robot no disponible' }}</p>
         </div>
 
-        <div class="base-podio">
-          {{ participante.posicion }}°
-        </div>
+        <div class="base-podio">2°</div>
 
       </section>
-    }
 
-  </main>
+      <!-- Primer lugar -->
+      <section class="puesto primer-lugar">
+
+        <div class="medalla">🥇</div>
+
+        <h3>CAMPEÓN</h3>
+
+        <div class="robot">
+          @if (podio.primero?.logoUrl) {
+            <img
+              [src]="podio.primero.logoUrl"
+              [alt]="'Logo de ' + podio.primero.nombre">
+          } @else {
+            —
+          }
+        </div>
+
+        <div class="datos-equipo">
+          <h2>{{ podio.primero?.nombre ?? 'PENDIENTE' }}</h2>
+          <p>{{ podio.primero?.robot ?? 'Robot no disponible' }}</p>
+        </div>
+
+        <div class="base-podio">1°</div>
+
+      </section>
+
+      <!-- Tercer lugar -->
+      <section class="puesto tercer-lugar">
+
+        <div class="medalla">🥉</div>
+
+        <h3>TERCER LUGAR</h3>
+
+        <div class="robot">
+          @if (podio.tercero?.logoUrl) {
+            <img
+              [src]="podio.tercero.logoUrl"
+              [alt]="'Logo de ' + podio.tercero.nombre">
+          } @else {
+            —
+          }
+        </div>
+
+        <div class="datos-equipo">
+          <h2>{{ podio.tercero?.nombre ?? 'PENDIENTE' }}</h2>
+          <p>{{ podio.tercero?.robot ?? 'Robot no disponible' }}</p>
+        </div>
+
+        <div class="base-podio">3°</div>
+
+      </section>
+
+    </main>
+
+  } @else {
+
+    <main class="podio">
+      <h2>ESPERANDO RESULTADOS FINALES</h2>
+    </main>
+
+  }
 
   <footer class="pie">
     <p>UNIVERSIDAD DE OCCIDENTE ROOSEVELT</p>

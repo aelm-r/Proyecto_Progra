@@ -1,0 +1,64 @@
+﻿<div
+  class="contenedor-rotacion"
+  [ngStyle]="{'background-image': 'url(' + imagenFondo() + ')'}">
+
+  <div class="capa-oscura"></div>
+
+  <div class="contenido-rotacion">
+
+    <!-- Encabezado -->
+    <div class="encabezado-rotacion">
+      <h1>ESTADO DEL TORNEO</h1>
+    </div>
+
+    <div class="grilla-rotacion">
+
+      <div class="seccion-bracket">
+
+        <h3>FASE ELIMINATORIA</h3>
+
+        <div class="contenedor-llaves">
+
+          @for (combate of estado().bracket; track combate.combateId) {
+
+            <div class="llave-item">
+
+              <span class="nombre-llave">
+                {{ combate.llave ?? combate.fase }}
+              </span>
+
+              <span class="equipos-llave">
+                {{ combate.equipoA }}
+                VS
+                {{ combate.equipoB }}
+              </span>
+
+              <span class="marcador-llave">
+                {{ combate.marcador ?? 'PENDIENTE' }}
+              </span>
+
+            </div>
+
+          } @empty {
+
+            <div class="llave-item">
+              <span class="nombre-llave">
+                ESPERANDO ENFRENTAMIENTOS
+              </span>
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="pie-rotacion">
+    <p>ESPERANDO LLAMADO A SIGUIENTE COMBATE...</p>
+  </div>
+
+</div>

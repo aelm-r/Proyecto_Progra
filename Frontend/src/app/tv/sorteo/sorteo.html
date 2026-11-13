@@ -2,57 +2,55 @@
 
   <h1>{{ titulo }}</h1>
 
-  @if (!sorteoIniciado() && !sorteoFinalizado()) {
-    <button class="boton-iniciar" (click)="iniciarSorteo()">
-      INICIAR SORTEO DE PRUEBA
-    </button>
-  }
+  @if (estado().sorteo.realizado) {
 
-  @if (equipoActual(); as equipo) {
-    <div class="equipo-destacado">
-      <h2>{{ equipo.nombre }}</h2>
-      <p>{{ equipo.robot }}</p>
-    </div>
-  }
+    <div class="grupos">
 
-  <div class="grupos">
+      <div class="grupo">
 
-    <div class="grupo grupo-a">
+        <h2>ASIGNACIONES OFICIALES</h2>
 
-      <h2>GRUPO A</h2>
+        @for (item of estado().sorteo.equipos; track item.equipo.id) {
 
-      @for (equipo of grupoA(); track equipo.nombre) {
-        <div class="tarjeta-equipo animacion-entrada">
-          <h3>{{ equipo.nombre }}</h3>
-          <p>{{ equipo.robot }}</p>
-        </div>
-      }
+          <div class="tarjeta-equipo animacion-entrada">
 
-    </div>
+            @if (item.equipo.logoUrl) {
+              <img
+                class="logo-equipo"
+                [src]="item.equipo.logoUrl"
+                [alt]="'Logo de ' + item.equipo.nombre">
+            } @else {
+              <div class="logo-pendiente">🤖</div>
+            }
 
-    <div class="grupo grupo-b">
+            <h3>{{ item.equipo.nombre }}</h3>
 
-      <h2>GRUPO B</h2>
+            <p>GRUPO {{ item.grupo }}</p>
 
-      @for (equipo of grupoB(); track equipo.nombre) {
-        <div class="tarjeta-equipo animacion-entrada">
-          <h3>{{ equipo.nombre }}</h3>
-          <p>{{ equipo.robot }}</p>
-        </div>
-      }
+            <p>POSICIÓN {{ item.posicionSorteo }}</p>
+
+            <p>
+              {{ item.equipo.robot ?? 'Robot pendiente' }}
+            </p>
+
+          </div>
+
+        }
+
+      </div>
 
     </div>
 
-  </div>
-
-  @if (sorteoFinalizado()) {
     <h2 class="mensaje-final">
       ¡SORTEO FINALIZADO!
     </h2>
 
-    <button class="boton-iniciar" (click)="iniciarSorteo()">
-      REPETIR SIMULACIÓN
-    </button>
+  } @else {
+
+    <div class="grupo">
+      <h2>ESPERANDO REALIZACIÓN DEL SORTEO</h2>
+    </div>
+
   }
 
 </div>

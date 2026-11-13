@@ -1,4 +1,3 @@
-
 .contenido-bienvenida {
   width: 100%;
   display: flex;
@@ -105,4 +104,24 @@ h2 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Logos reales de los equipos */
+.logo-equipo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+/* Alternativa visual cuando no hay logo */
+.logo-pendiente {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+  margin: 0 auto 12px;
 }

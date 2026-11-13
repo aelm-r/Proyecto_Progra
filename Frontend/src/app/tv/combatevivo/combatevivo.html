@@ -1,118 +1,109 @@
-<div
-  class="contenedor-combatevivo"
-  [class.modo-muerte-subita]="muerteSubita()">
+@if (estado().combateEnCurso; as combate) {
+  <div
+    class="contenedor-combatevivo"
+    [class.modo-muerte-subita]="combate.asaltoActual?.esMuerteSubita ?? false">
 
-  <!-- Encabezado -->
-  <div class="encabezado-combate">
-    <h1>{{ titulo }}</h1>
+    <!-- Encabezado -->
+    <div class="encabezado-combate">
+      <h1>{{ titulo }}</h1>
 
-    <div class="informacion-combate">
-      <h2>COMBATE {{ numeroCombate() }} DE {{ totalCombates() }}</h2>
-      <p>{{ fase() }}</p>
-    </div>
-  </div>
-
-  <!-- Información de la ronda -->
-<div class="informacion-ronda">
-  @if (muerteSubita()) {
-    <h2 class="titulo-muerte-subita">MUERTE SÚBITA</h2>
-  } @else {
-    <h2>RONDA {{ rondaActual() }} DE {{ totalRondas }}</h2>
-  }
-
-</div>
-
-  <!-- Temporizador -->
-<div
-  class="temporizador"
-  [class.temporizador-muerte-subita]="muerteSubita()">
-    <span>{{ tiempoRestante() }}</span>
-  </div>
-
-  <!-- Enfrentamiento -->
-  <div class="enfrentamiento">
-
-    <!-- Equipo A -->
-    <div class="equipo equipo-a">
-      <div class="logo-equipo">
-        {{ equipoA().logo }}
+      <div class="informacion-combate">
+        <h2>
+          COMBATE {{ combate.numeroOrden }} DE {{ estado().totalCombates }}
+        </h2>
+        <p>{{ combate.fase }}</p>
       </div>
-
-      <h2>{{ equipoA().nombre }}</h2>
-      <p>Robot: {{ equipoA().robot }}</p>
-
-      <div class="marcador">
-        {{ marcadorA() }}
-      </div>
-      <p class="texto-marcador">RONDAS GANADAS</p>
     </div>
 
-    <!-- VS o pausa -->
-    <div class="centro-enfrentamiento">
-
-      @if (pausaTecnica()) {
-        <div class="aviso-pausa">
-          PAUSA
-          <p>PAUSA TÉCNICA</p>
-        </div>
+    <!-- Información del asalto -->
+    <div class="informacion-ronda">
+      @if (combate.asaltoActual?.esMuerteSubita) {
+        <h2 class="titulo-muerte-subita">MUERTE SÚBITA</h2>
       } @else {
-        <div class="versus">
-          VS
-        </div>
+        <h2>
+          RONDA {{ combate.asaltoActual?.numero ?? '--' }}
+        </h2>
       }
-
     </div>
 
-    <!-- Equipo B -->
-    <div class="equipo equipo-b">
-      <div class="logo-equipo">
-        {{ equipoB().logo }}
-      </div>
-
-      <h2>{{ equipoB().nombre }}</h2>
-      <p>Robot: {{ equipoB().robot }}</p>
-
-      <div class="marcador">
-        {{ marcadorB() }}
-      </div>
-      <p class="texto-marcador">RONDAS GANADAS</p>
+    <!-- Temporizador -->
+    <div
+      class="temporizador"
+      [class.temporizador-muerte-subita]="combate.asaltoActual?.esMuerteSubita ?? false">
+      <span>--</span>
     </div>
 
+    <!-- Enfrentamiento -->
+    <div class="enfrentamiento">
+
+      <!-- Equipo A -->
+      <div class="equipo equipo-a">
+        <div class="logo-equipo">
+          @if (combate.equipoA.logoUrl) {
+            <img
+              [src]="combate.equipoA.logoUrl"
+              [alt]="'Logo de ' + combate.equipoA.nombre">
+          } @else {
+            🤖
+          }
+        </div>
+
+        <h2>{{ combate.equipoA.nombre }}</h2>
+        <p>
+          Robot:
+          <br>
+          {{ combate.equipoA.robot ?? 'Robot pendiente' }}
+        </p>
+
+        <div class="marcador">
+          {{ combate.asaltosA }}
+        </div>
+        <p class="texto-marcador">RONDAS GANADAS</p>
+      </div>
+
+      <!-- VS o pausa -->
+      <div class="centro-enfrentamiento">
+        @if (combate.estado === 'en_pausa') {
+          <div class="aviso-pausa">
+            PAUSA
+            <p>PAUSA TÉCNICA</p>
+          </div>
+        } @else {
+          <div class="versus">
+            VS
+          </div>
+        }
+      </div>
+
+      <!-- Equipo B -->
+      <div class="equipo equipo-b">
+        <div class="logo-equipo">
+          @if (combate.equipoB.logoUrl) {
+            <img
+              [src]="combate.equipoB.logoUrl"
+              [alt]="'Logo de ' + combate.equipoB.nombre">
+          } @else {
+            🐉
+          }
+        </div>
+
+        <h2>{{ combate.equipoB.nombre }}</h2>
+        <p>
+          Robot:
+          <br>
+          {{ combate.equipoB.robot ?? 'Robot pendiente' }}
+        </p>
+
+        <div class="marcador">
+          {{ combate.asaltosB }}
+        </div>
+        <p class="texto-marcador">RONDAS GANADAS</p>
+      </div>
+
+    </div>
   </div>
-
-  <!-- Controles temporales de prueba -->
-  <div class="controles-prueba">
-
-    <button
-      (click)="iniciarTemporizador()"
-      [disabled]="temporizadorActivo() || pausaTecnica() || tiempoRestante() === 0">
-      INICIAR TIEMPO
-    </button>
-
-    <button
-      (click)="activarPausa()"
-      [disabled]="pausaTecnica() || tiempoRestante() === 0">
-      PAUSA TÉCNICA
-    </button>
-
-    <button
-      (click)="reanudarCombate()"
-      [disabled]="!pausaTecnica()">
-      REANUDAR
-    </button>
-
-    @if (!muerteSubita()) {
-      <button
-        class="boton-muerte-subita"
-        (click)="activarMuerteSubita()">
-        ACTIVAR MUERTE SÚBITA
-      </button>
-    } @else {
-      <button
-        class="boton-muerte-subita"
-        (click)="desactivarMuerteSubita()">
-        VOLVER A MODO NORMAL
-      </button>
-    }
+} @else {
+  <div class="contenedor-combatevivo">
+    <h1>ESPERANDO COMBATE</h1>
   </div>
-</div>
+}

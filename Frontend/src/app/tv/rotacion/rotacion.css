@@ -1,4 +1,4 @@
-.contenedor-rotacion {
+﻿.contenedor-rotacion {
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -69,9 +69,8 @@
   align-items: center;
 }
 
-/* Tarjetas */
-.seccion-tabla,
-.seccion-bracket {
+/* Tarjetas de grupos */
+.seccion-tabla {
   width: 100%;
   max-width: 1350px;
   background: rgba(10, 10, 15, 0.94);
@@ -94,14 +93,7 @@
   animation: entrar-derecha 0.8s ease-out 0.35s both;
 }
 
-.seccion-bracket {
-  border: 3px solid #ffd700;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
-  animation: aparecer 0.8s ease-out 0.5s both;
-}
-
-.seccion-tabla h3,
-.seccion-bracket h3 {
+.seccion-tabla h3 {
   font-size: 22px;
   margin: 0 0 6px 0;
   color: #ffd700;
@@ -139,44 +131,6 @@
 
 .tabla-posiciones tbody tr:hover {
   background: rgba(255, 255, 255, 0.12);
-}
-
-/* Llaves */
-.contenedor-llaves {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px 25px;
-}
-
-.llave-item {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 8px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-left: 5px solid #ffd700;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.llave-item:hover {
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
-}
-
-.nombre-llave {
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffcc00;
-  text-transform: uppercase;
-}
-
-.equipos-llave {
-  font-size: 18px;
-  font-weight: bold;
-  color: #ffffff;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
 /* Pie de página */
@@ -247,4 +201,29 @@
   50% {
     opacity: 0.7;
   }
+}
+
+/* ===== LOGOS DE LOS EQUIPOS ===== */
+
+.celda-equipo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-equipo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.logo-pendiente {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  flex-shrink: 0;
 }

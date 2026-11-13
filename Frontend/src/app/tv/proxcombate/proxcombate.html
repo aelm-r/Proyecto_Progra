@@ -2,49 +2,83 @@
 
   <h1>{{ titulo }}</h1>
 
-  <div class="informacion-combate">
-    <h2>COMBATE {{ numeroCombate() }} DE {{ totalCombates() }}</h2>
-    <p>{{ fase() }}</p>
-  </div>
+  @if (estado().siguienteCombate; as combate) {
 
-  <div class="enfrentamiento">
+    <div class="informacion-combate">
+      <h2>
+        COMBATE {{ combate.numeroOrden }} DE {{ estado().totalCombates }}
+      </h2>
 
-    <div class="equipo equipo-a">
-      <div class="logo-equipo">
-        {{ equipoA().logo }}
+      <p>{{ combate.fase }}</p>    </div>
+
+    <div class="enfrentamiento">
+
+      <div class="equipo equipo-a">
+
+        <div class="logo-equipo">
+          @if (combate.equipoA?.logoUrl) {
+            <img
+              [src]="combate.equipoA?.logoUrl"
+              [alt]="'Logo de ' + combate.equipoA?.nombre">
+          } @else {
+            🤖
+          }
+        </div>
+
+        @if (combate.equipoA; as equipo) {
+          <h2>{{ equipo.nombre }}</h2>
+          <p>
+            Robot:
+            <br>
+            {{ equipo.robot ?? 'Robot pendiente' }}
+          </p>
+        } @else {
+          <h2>Equipo pendiente</h2>
+          <p>Robot pendiente</p>
+        }
+
       </div>
 
-      <h2>{{ equipoA().nombre }}</h2>
-      <p>
-        Robot: 
-        <br>
-        {{ equipoA().robot }}
-      </p>
-    </div>
-
-
-    <div class="versus">
-      <span>VS</span>
-    </div>
-
-    
-    <div class="equipo equipo-b">
-      <div class="logo-equipo">
-        {{ equipoB().logo }}
+      <div class="versus">
+        <span>VS</span>
       </div>
 
-      <h2>{{ equipoB().nombre }}</h2>
-      <p>
-        Robot: 
-        <br>
-        {{ equipoB().robot }}
-      </p>
+      <div class="equipo equipo-b">
+
+        <div class="logo-equipo">
+          @if (combate.equipoB?.logoUrl) {
+            <img
+              [src]="combate.equipoB?.logoUrl"
+              [alt]="'Logo de ' + combate.equipoB?.nombre">
+          } @else {
+            🤖
+          }
+        </div>
+
+        @if (combate.equipoB; as equipo) {
+          <h2>{{ equipo.nombre }}</h2>
+          <p>
+            Robot:
+            <br>
+            {{ equipo.robot ?? 'Robot pendiente' }}
+          </p>
+        } @else {
+          <h2>Equipo pendiente</h2>
+          <p>Robot pendiente</p>
+        }
+
+      </div>
+
     </div>
 
-  </div>
+    <div class="mensaje-combate">
+      <p>{{ mensaje }}</p>
+    </div>
 
-  <div class="mensaje-combate">
-    <p>{{ mensaje() }}</p>
-  </div>
+  } @else {
+    <div class="informacion-combate">
+      <h2>ESPERANDO PRÓXIMO COMBATE</h2>
+    </div>
+  }
 
 </div>

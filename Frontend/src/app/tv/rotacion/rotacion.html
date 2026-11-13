@@ -1,7 +1,7 @@
-<div 
-  class="contenedor-rotacion" 
+﻿<div
+  class="contenedor-rotacion"
   [ngStyle]="{'background-image': 'url(' + imagenFondo() + ')'}">
-  
+
   <div class="capa-oscura"></div>
 
   <div class="contenido-rotacion">
@@ -9,84 +9,72 @@
     <!-- Encabezado -->
     <div class="encabezado-rotacion">
       <h1>ESTADO DEL TORNEO</h1>
-      <p class="subtitulo-rotacion">ROTACIÓN OFICIAL — FASE DE GRUPOS Y LLAVES</p>
+      <p class="subtitulo-rotacion">
+        ROTACIÓN OFICIAL — FASE DE GRUPOS
+      </p>
     </div>
 
-    <!-- Grilla de contenido (Grupos A y B + Bracket) -->
+    <!-- Grupos recibidos del backend -->
     <div class="grilla-rotacion">
 
-      <!-- Grupo A -->
-      <div class="seccion-tabla">
-        <h3>GRUPO A</h3>
-        <table class="tabla-posiciones">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Equipo</th>
-              <th>Pts</th>
-              <th>DG</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (eq of grupoA(); track eq.posicion) {
-              <tr [class.clasificado]="eq.posicion <= 2">
-                <td>{{ eq.posicion }}</td>
-                <td>{{ eq.nombre }}</td>
-                <td>{{ eq.puntos }}</td>
-                <td>{{ eq.diferenciaAsaltos }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+      @for (grupo of estado().grupos; track grupo.nombre) {
 
-      <!-- Grupo B -->
-      <div class="seccion-tabla">
-        <h3>GRUPO B</h3>
-        <table class="tabla-posiciones">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Equipo</th>
-              <th>Pts</th>
-              <th>DG</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (eq of grupoB(); track eq.posicion) {
-              <tr [class.clasificado]="eq.posicion <= 2">
-                <td>{{ eq.posicion }}</td>
-                <td>{{ eq.nombre }}</td>
-                <td>{{ eq.puntos }}</td>
-                <td>{{ eq.diferenciaAsaltos }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+        <div class="seccion-tabla">
 
-      <!-- Llaves / Semifinales y Final -->
-      <div class="seccion-bracket">
-        <h3>FASE ELIMINATORIA</h3>
-        <div class="contenedor-llaves">
-          <div class="llave-item">
-            <span class="nombre-llave">Semifinal 1</span>
-            <span class="equipos-llave">{{ semifinal1() }}</span>
-          </div>
-          <div class="llave-item">
-            <span class="nombre-llave">Semifinal 2</span>
-            <span class="equipos-llave">{{ semifinal2() }}</span>
-          </div>
-          <div class="llave-item">
-            <span class="nombre-llave">Tercer Lugar</span>
-            <span class="equipos-llave">{{ tercerLugar() }}</span>
-          </div>
-          <div class="llave-item" style="border-left-color: #ff3333;">
-            <span class="nombre-llave">Gran Final</span>
-            <span class="equipos-llave">{{ final() }}</span>
-          </div>
+          <h3>GRUPO {{ grupo.nombre }}</h3>
+
+          <table class="tabla-posiciones">
+
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Equipo</th>
+                <th>Pts</th>
+                <th>DG</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              @for (posicion of grupo.posiciones; track posicion.equipo.id) {
+
+                <tr>
+                  <td>{{ posicion.posicion }}</td>
+
+                  <td class="celda-equipo">
+
+                    @if (posicion.equipo.logoUrl) {
+                      <img
+                        class="logo-equipo"
+                        [src]="posicion.equipo.logoUrl"
+                        [alt]="'Logo de ' + posicion.equipo.nombre">
+                    } @else {
+                      <span class="logo-pendiente">🤖</span>
+                    }
+
+                    <span>{{ posicion.equipo.nombre }}</span>
+
+                  </td>
+
+                  <td>{{ posicion.puntos }}</td>
+                  <td>{{ posicion.diferenciaAsaltos }}</td>
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
         </div>
-      </div>
+
+      } @empty {
+
+        <div class="seccion-tabla">
+          <h3>ESPERANDO INFORMACIÓN DE LOS GRUPOS</h3>
+        </div>
+
+      }
 
     </div>
 

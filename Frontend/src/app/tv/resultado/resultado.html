@@ -1,62 +1,89 @@
-
 <div class="contenedor-resultado">
+
   <div class="fuegos-artificiales" aria-hidden="true">
-  <div class="fuego fuego-1"></div>
-  <div class="fuego fuego-2"></div>
-  <div class="fuego fuego-3"></div>
-  <div class="fuego fuego-4"></div>
-  <div class="fuego fuego-5"></div>
-</div>
-
-  <div class="encabezado">
-    <h1>¡GANADOR!</h1>
-
-    <div class="informacion">
-      <span>{{ fase }}</span>
-      <span>COMBATE {{ numeroCombate }}</span>
-    </div>
+    <div class="fuego fuego-1"></div>
+    <div class="fuego fuego-2"></div>
+    <div class="fuego fuego-3"></div>
+    <div class="fuego fuego-4"></div>
+    <div class="fuego fuego-5"></div>
   </div>
 
-  <!-- Presentación del ganador -->
-  <div class="tarjeta-ganador">
+  @if (estado().ultimoFinalizado; as combate) {
 
-    <div class="trofeo">🏆</div>
+    <div class="encabezado">
+      <h1>¡RESULTADO!</h1>
 
-    <div class="etiqueta-ganador">
-      EQUIPO GANADOR
+      <div class="informacion">
+        <span>{{ combate.fase }}</span>
+        <span>COMBATE {{ combate.numeroOrden }}</span>
+      </div>
     </div>
 
-    <h2>{{ ganador.nombre }}</h2>
+    <!-- Presentación del ganador -->
+    <div class="tarjeta-ganador">
 
-    <p>ROBOT</p>
-    <h3>{{ ganador.robot }}</h3>
+      <div class="trofeo">🏆</div>
 
-  </div>
+      <div class="etiqueta-ganador">
+        EQUIPO GANADOR
+      </div>
 
-  <!-- Marcador final -->
-  <div class="marcador">
+      <h2>GANADOR NO DISPONIBLE</h2>
 
-    <div class="participante">
-      <h4>{{ equipoA.nombre }}</h4>
-      <span>{{ equipoA.puntos }}</span>
+      <p>RESULTADO</p>
+      <h3>{{ combate.tipoResultado ?? 'NO DISPONIBLE' }}</h3>
+
     </div>
 
-    <div class="separador">-</div>
+    <!-- Marcador final -->
+    <div class="marcador">
 
-    <div class="participante">
-      <h4>{{ equipoB.nombre }}</h4>
-      <span>{{ equipoB.puntos }}</span>
+      <div class="participante">
+
+        @if (combate.equipoA?.logoUrl) {
+          <img
+            class="logo-equipo"
+            [src]="combate.equipoA.logoUrl"
+            [alt]="'Logo de ' + combate.equipoA.nombre">
+        } @else {
+          <div class="logo-pendiente">🤖</div>
+        }
+
+        <h4>{{ combate.equipoA?.nombre ?? 'NO DISPONIBLE' }}</h4>
+
+      </div>
+
+      <div class="separador">
+        {{ combate.marcador }}
+      </div>
+
+      <div class="participante">
+
+        @if (combate.equipoB?.logoUrl) {
+          <img
+            class="logo-equipo"
+            [src]="combate.equipoB.logoUrl"
+            [alt]="'Logo de ' + combate.equipoB.nombre">
+        } @else {
+          <div class="logo-pendiente">🤖</div>
+        }
+
+        <h4>{{ combate.equipoB?.nombre ?? 'NO DISPONIBLE' }}</h4>
+
+      </div>
+
     </div>
 
-  </div>
+    <div class="mensaje-final">
+      RESULTADO DEL COMBATE
+    </div>
 
-  <!-- Motivo de victoria -->
-  <div class="motivo">
-    {{ motivoVictoria }}
-  </div>
+  } @else {
 
-  <div class="mensaje-final">
-    ¡FELICIDADES AL EQUIPO GANADOR!
-  </div>
+    <div class="encabezado">
+      <h1>ESPERANDO RESULTADO</h1>
+    </div>
+
+  }
 
 </div>

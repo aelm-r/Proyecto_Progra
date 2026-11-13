@@ -1,0 +1,25 @@
+<div class="pantalla-tv">
+
+  @if (estadoEvento; as estado) {
+
+    @if (estadoActual === 'bienvenida') {
+      <app-bienvenida [estado]="estado"></app-bienvenida>
+    } @else if (estadoActual === 'sorteo') {
+      <app-sorteo [estado]="estado"></app-sorteo>
+    } @else if (estadoActual === 'proxcombate') {
+      <app-proxcombate [estado]="estado"></app-proxcombate>
+    } @else if (estadoActual === 'combatevivo') {
+      <app-combatevivo [estado]="estado"></app-combatevivo>
+    } @else if (estadoActual === 'resultado') {
+      <app-resultado [estado]="estado"></app-resultado>
+    } @else if (estadoActual === 'rotacion') {
+      <app-rotacion [estado]="estado"></app-rotacion>
+    } @else if (estadoActual === 'campeon') {
+      <app-campeon [estado]="estado"></app-campeon>
+    } @else if (estadoActual === 'eliminatoria') {
+      <app-eliminatoria [estado]="estado"></app-eliminatoria>
+    }
+
+  }
+
+</div>

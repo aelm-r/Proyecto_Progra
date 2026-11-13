@@ -1,0 +1,225 @@
+﻿/* Componente a pantalla completa */
+:host {
+  display: block;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+/* Contenedor principal */
+.contenedor-rotacion {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 30px 45px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Capa oscura de pantalla completa */
+.capa-oscura {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 1;
+}
+
+.contenido-rotacion {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin: auto;
+}
+
+/* Encabezado */
+.encabezado-rotacion {
+  animation: aparecer-arriba 0.8s ease-out both;
+}
+
+.encabezado-rotacion h1 {
+  font-size: 58px;
+  margin: 0;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(0, 170, 255, 0.8);
+}
+
+/* Grilla */
+.grilla-rotacion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Tarjeta de fase eliminatoria */
+.seccion-bracket {
+  width: 100%;
+  max-width: 1500px;
+  background: rgba(10, 10, 15, 0.94);
+  border: 3px solid #ffd700;
+  border-radius: 20px;
+  padding: 28px 45px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+  animation: aparecer 0.8s ease-out 0.5s both;
+}
+
+.seccion-bracket h3 {
+  font-size: 34px;
+  margin: 0 0 22px 0;
+  color: #ffd700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Llaves */
+.contenedor-llaves {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 35px;
+}
+
+.llave-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-left: 7px solid #ffd700;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.llave-item:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.nombre-llave {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffcc00;
+  text-transform: uppercase;
+}
+
+.equipos-llave {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Pie de página */
+.pie-rotacion {
+  position: relative;
+  z-index: 2;
+  margin-top: 20px;
+  animation: aparecer 0.8s ease-out 0.7s both;
+}
+
+.pie-rotacion p {
+  font-size: 22px;
+  color: #ffd700;
+  letter-spacing: 4px;
+  margin: 0;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  animation: parpadeo 2s infinite;
+}
+
+/* Animaciones */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aparecer-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes parpadeo {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 900px) {
+  .contenedor-rotacion {
+    padding: 20px;
+  }
+
+  .encabezado-rotacion h1 {
+    font-size: 40px;
+  }
+
+  .seccion-bracket {
+    padding: 20px;
+  }
+
+  .seccion-bracket h3 {
+    font-size: 26px;
+  }
+
+  .contenedor-llaves {
+    gap: 12px;
+  }
+
+  .llave-item {
+    padding: 14px;
+  }
+
+  .nombre-llave {
+    font-size: 17px;
+  }
+
+  .equipos-llave {
+    font-size: 18px;
+  }
+
+  .pie-rotacion p {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+}

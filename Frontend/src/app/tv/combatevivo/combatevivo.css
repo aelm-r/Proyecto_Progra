@@ -1,4 +1,3 @@
-
 .contenedor-combatevivo {
   width: 100%;
   min-height: 100vh;
@@ -178,38 +177,6 @@
   letter-spacing: 2px;
 }
 
-/* Controles temporales de prueba */
-.controles-prueba {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 25px;
-  animation: aparecer-abajo 0.8s ease-out 0.8s both;
-}
-
-.controles-prueba button {
-  padding: 13px 25px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  background: #0077cc;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.controles-prueba button:hover:not(:disabled) {
-  background: #0099ff;
-  transform: translateY(-3px);
-}
-
-.controles-prueba button:disabled {
-  background: #555;
-  color: #aaa;
-  cursor: not-allowed;
-}
-
 /* Animaciones generales */
 @keyframes aparecer {
   from {
@@ -224,17 +191,6 @@
   from {
     opacity: 0;
     transform: translateY(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes aparecer-abajo {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -327,15 +283,11 @@
   text-shadow: 0 0 15px rgba(255, 40, 40, 0.6);
 }
 
-/* Botón de muerte súbita */
-.controles-prueba button.boton-muerte-subita {
-  background: #b91c1c;
-}
-
-.controles-prueba button.boton-muerte-subita:hover:not(:disabled) {
-  background: #ef2929;
-}
-
-.controles-prueba button.boton-muerte-subita:disabled {
-  background: #555;
+/* Dimensiones de los logos reales */
+.logo-equipo img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
