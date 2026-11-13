@@ -1,3 +1,4 @@
+using TorneoGallito.DTOs.Request;
 using TorneoGallito.DTOs.Responses;
 
 namespace TorneoGallito.Services.Interfaces
