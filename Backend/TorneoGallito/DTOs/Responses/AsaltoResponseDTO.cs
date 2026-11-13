@@ -10,4 +10,5 @@ namespace TorneoGallito.DTOs.Responses
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
         public int DuracionMaximaSegundos { get; set; } 
+     }
 }
