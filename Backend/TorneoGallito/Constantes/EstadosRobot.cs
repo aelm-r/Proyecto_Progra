@@ -8,4 +8,5 @@ namespace TorneoGallito.Constantes
 
         public static readonly string[] Todos = [Activo, EnReparacion, Descalificado];
     }
+
 }
