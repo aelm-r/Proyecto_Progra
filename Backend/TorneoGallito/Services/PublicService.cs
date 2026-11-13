@@ -45,7 +45,58 @@ namespace TorneoGallito.Services
                 respuesta.Podio = ObtenerPodio();
             }
 
+            respuesta.PantallaActual = CalcularPantalla(respuesta);
+
             return respuesta;
+        }
+
+        private string CalcularPantalla(EstadoEventoResponseDTO estado)
+        {
+            if (estado.Fase == FasesCombate.EventoPreparacion)
+            {
+                return "bienvenida";
+            }
+
+            if (estado.Fase == FasesCombate.EventoSorteoRealizado)
+            {
+                return "sorteo";
+            }
+
+            if (estado.CombateEnCurso != null)
+            {
+                return "combatevivo";
+            }
+
+            if (estado.UltimoFinalizado != null && estado.UltimoFinalizado.FechaFin != null)
+            {
+                double segundos = (estado.HoraServidor - estado.UltimoFinalizado.FechaFin.Value).TotalSeconds;
+                if (segundos >= 0 && segundos <= 15)
+                {
+                    return "resultado";
+                }
+            }
+
+            if (estado.SiguienteCombate != null)
+            {
+                return "proxcombate";
+            }
+
+            if (estado.Fase == FasesCombate.EventoGrupos)
+            {
+                return "rotacion";
+            }
+
+            if (estado.Fase == FasesCombate.EventoEliminatoria)
+            {
+                return "eliminatoria";
+            }
+
+            if (estado.Fase == FasesCombate.EventoFinalizado)
+            {
+                return "campeon";
+            }
+
+            return "bienvenida";
         }
 
         public SorteoResponseDTO ObtenerSorteo()
@@ -149,8 +200,8 @@ namespace TorneoGallito.Services
                     NumeroOrden = fila.NumeroOrden,
                     Fase = fila.Fase,
                     Llave = fila.Llave,
-                    EquipoA = fila.EquipoA,
-                    EquipoB = fila.EquipoB,
+                    EquipoANombre = fila.EquipoA,
+                    EquipoBNombre = fila.EquipoB,
                     Marcador = ObtenerMarcador(fila.CombateId)
                 };
 
@@ -161,6 +212,15 @@ namespace TorneoGallito.Services
                     llave.EquipoBId = combate.EquipoBId;
                     llave.Estado = combate.Estado;
                     llave.GanadorId = combate.GanadorId;
+
+                    if (combate.EquipoAId != null)
+                    {
+                        llave.EquipoA = BuscarEquipo(combate.EquipoAId.Value);
+                    }
+                    if (combate.EquipoBId != null)
+                    {
+                        llave.EquipoB = BuscarEquipo(combate.EquipoBId.Value);
+                    }
                 }
 
                 respuesta.Add(llave);
@@ -242,8 +302,10 @@ namespace TorneoGallito.Services
                 CombateId = combate.Id,
                 NumeroOrden = combate.NumeroOrden,
                 Fase = combate.Fase,
+                FaseNombre = FasesCombate.NombreLegible(combate.Fase),
                 Estado = combate.Estado,
-                Marcador = combate.Marcador
+                Marcador = combate.Marcador,
+                TotalAsaltos = ResultadosAsalto.TotalAsaltos
             };
 
             if (combate.EquipoA != null)
@@ -270,6 +332,19 @@ namespace TorneoGallito.Services
                 {
                     enVivo.AsaltoActual = asalto;
                 }
+            }
+
+            if (enVivo.AsaltoActual != null)
+            {
+                double transcurridos = (DateTime.Now - enVivo.AsaltoActual.FechaInicio).TotalSeconds;
+                int restantes = enVivo.AsaltoActual.DuracionMaximaSegundos - (int)transcurridos;
+
+                if (restantes < 0)
+                {
+                    restantes = 0;
+                }
+
+                enVivo.TiempoRestanteSegundos = restantes;
             }
 
             if (combate.Estado == EstadosCombate.EnPausa)

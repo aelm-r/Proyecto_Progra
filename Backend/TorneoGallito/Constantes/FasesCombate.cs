@@ -14,5 +14,26 @@ namespace TorneoGallito.Constantes
         public const string EventoGrupos = "grupos";
         public const string EventoEliminatoria = "eliminatoria";
         public const string EventoFinalizado = "finalizado";
+
+        public static string NombreLegible(string fase)
+        {
+            if (fase == Grupos)
+            {
+                return "Fase de grupos";
+            }
+            if (fase == Semifinal)
+            {
+                return "Semifinal";
+            }
+            if (fase == TercerLugar)
+            {
+                return "Tercer lugar";
+            }
+            if (fase == Final)
+            {
+                return "Final";
+            }
+            return fase;
+        }
     }
 }
