@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
+import { PanelJuez } from './panel-juez/panel-juez';
 
+// Contenedor de la sección /juez (la ruta ya existe en app.routes.ts, no hay que tocarla).
 @Component({
   selector: 'app-juez',
-  standalone: true,
-  template: `
-    <h1>Panel de Jueces</h1>
-    <p>Espacio de trabajo del equipo F2.</p>
-  `
+  imports: [PanelJuez],
+  template: `<app-panel-juez />`,
 })
-export class AppJuez {
-}
+export class AppJuez {}

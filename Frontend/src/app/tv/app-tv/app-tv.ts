@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { Subscription, timer, EMPTY } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 
@@ -39,10 +39,10 @@ export class AppTv implements OnInit, OnDestroy {
   mensaje = 'PREPARATE PARA EL COMBATE';
 
   // Último estado recibido desde el backend.
-  estadoEvento: EstadoEvento | null = null;
+  estadoEvento = signal<EstadoEvento | null>(null);
 
   // Pantalla indicada por el backend.
-  estadoActual = 'bienvenida';
+  estadoActual = signal('bienvenida');
 
   ngOnInit(): void {
     this.suscripcion = timer(0, 2000).pipe(
@@ -55,8 +55,8 @@ export class AppTv implements OnInit, OnDestroy {
         )
       )
     ).subscribe(estado => {
-      this.estadoEvento = estado;
-      this.estadoActual = estado.pantallaActual;
+      this.estadoEvento.set(estado);
+      this.estadoActual.set(estado.pantallaActual);
     });
   }
 
