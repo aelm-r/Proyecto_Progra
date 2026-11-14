@@ -2,7 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://localhost:5256/api/public';
+import { API_URL as API_BASE } from '../core/config';
+
+const API_URL = `${API_BASE}/public`;
 
 // Respuesta general del estado del torneo
 export interface EstadoEvento {

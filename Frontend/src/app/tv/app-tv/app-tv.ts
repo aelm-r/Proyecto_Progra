@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { Subscription, timer, EMPTY } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { exhaustMap, catchError } from 'rxjs/operators';
 
 import { TorneoApi, EstadoEvento } from '../../services/torneo-api';
 
@@ -46,7 +46,7 @@ export class AppTv implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.suscripcion = timer(0, 2000).pipe(
-      switchMap(() =>
+      exhaustMap(() =>
         this.torneoApi.obtenerEstadoEvento().pipe(
           catchError(error => {
             console.error('Error al consultar el estado del torneo:', error);

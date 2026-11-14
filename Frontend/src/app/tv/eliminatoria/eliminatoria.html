@@ -24,17 +24,21 @@
             <div class="llave-item">
 
               <span class="nombre-llave">
-                {{ combate.llave ?? combate.fase }}
+                {{ nombreLlave(combate.fase, combate.llave) }}
               </span>
 
               <span class="equipos-llave">
-                {{ combate.equipoA?.nombre ?? combate.equipoANombre }}
-                VS
-                {{ combate.equipoB?.nombre ?? combate.equipoBNombre }}
+                <span [class.ganador]="combate.ganadorId !== null && combate.ganadorId === combate.equipoAId">
+                  {{ combate.equipoA?.nombre ?? combate.equipoANombre }}
+                </span>
+                <span class="vs">VS</span>
+                <span [class.ganador]="combate.ganadorId !== null && combate.ganadorId === combate.equipoBId">
+                  {{ combate.equipoB?.nombre ?? combate.equipoBNombre }}
+                </span>
               </span>
 
               <span class="marcador-llave">
-                {{ combate.marcador ?? 'PENDIENTE' }}
+                {{ textoEstado(combate) }}
               </span>
 
             </div>

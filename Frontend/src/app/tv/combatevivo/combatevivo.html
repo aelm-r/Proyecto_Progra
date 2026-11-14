@@ -19,11 +19,13 @@
     <div class="informacion-ronda">
       @if (combate.asaltoActual?.esMuerteSubita) {
         <h2 class="titulo-muerte-subita">MUERTE SÚBITA</h2>
-      } @else {
+      } @else if (combate.asaltoActual) {
         <h2>
-          RONDA {{ combate.asaltoActual?.numero ?? '--' }}
+          RONDA {{ combate.asaltoActual.numero }}
           DE {{ combate.totalAsaltos }}
         </h2>
+      } @else {
+        <h2>ENTRE ASALTOS</h2>
       }
     </div>
 
@@ -31,7 +33,11 @@
     <div
       class="temporizador"
       [class.temporizador-muerte-subita]="combate.asaltoActual?.esMuerteSubita ?? false">
-      <span>{{ combate.tiempoRestanteSegundos ?? '--' }}</span>
+      @if (combate.estado === 'en_pausa') {
+        <span class="texto-pausa">PAUSA</span>
+      } @else {
+        <span>{{ segundosRestantes() ?? '--' }}</span>
+      }
     </div>
 
     <!-- Enfrentamiento -->

@@ -25,7 +25,7 @@
       <div class="trofeo">🏆</div>
 
       <div class="etiqueta-ganador">
-        EQUIPO GANADOR
+        {{ combate.ganador ? 'EQUIPO GANADOR' : 'SIN GANADOR' }}
       </div>
 
       @if (combate.ganador; as ganador) {
@@ -39,11 +39,11 @@
           <h2>{{ ganador.nombre }}</h2>
         </div>
       } @else {
-        <h2>GANADOR NO DISPONIBLE</h2>
+        <h2>{{ combate.tipoResultado === 'empate' ? '¡EMPATE!' : 'GANADOR NO DISPONIBLE' }}</h2>
       }
 
       <p>RESULTADO</p>
-      <h3>{{ combate.tipoResultado ?? 'NO DISPONIBLE' }}</h3>
+      <h3>{{ textoResultado(combate.tipoResultado) }}</h3>
 
     </div>
 

@@ -1,3 +1,4 @@
+
 -- 5.1 TABLAS --
 -- 1. Roles
 CREATE TABLE roles (
@@ -116,8 +117,6 @@ CREATE TABLE auditoria_combates (
     usuario_id INT REFERENCES usuarios(id),
     fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 -- 5.2 FUNCIONES (SELECT)
 -- 1) fn_tabla_posiciones(grupo) -- 
@@ -349,7 +348,6 @@ BEGIN
     ORDER BY combate_id ASC;
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- 5.3 PROCEDIMIENTOS ALMACENADOS --
 -- 1) sp_realizar_sorteo --

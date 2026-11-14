@@ -18,6 +18,11 @@
     box-sizing: border-box;
 }
 
+.pantalla-tv > * {
+    display: block;
+    width: 100%;
+}
+
 h1 {
     font-size: 64px;
     margin-bottom: 10px;

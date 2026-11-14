@@ -164,15 +164,16 @@ export class PanelJuez implements OnInit, OnDestroy {
     const tipo = this.dialogo();
     if (!tipo || !this.dialogoValido()) return;
     const cerrar = () => this.dialogo.set(null);
+    const cerrarYPasarAlSiguiente = () => { cerrar(); this.combate.set(null); };
     const equipoId = this.equipoSel();
     const resultado = this.resultadoSel();
 
     switch (tipo) {
       case 'finalizar':
-        this.ejecutar((id) => this.api.finalizar(id), cerrar);
+        this.ejecutar((id) => this.api.finalizar(id), cerrarYPasarAlSiguiente);
         break;
       case 'wo':
-        this.ejecutar((id) => this.api.wo(id, equipoId!), cerrar);
+        this.ejecutar((id) => this.api.wo(id, equipoId!), cerrarYPasarAlSiguiente);
         break;
       case 'pausa':
         this.ejecutar((id) => this.api.pausar(id, equipoId!), cerrar);

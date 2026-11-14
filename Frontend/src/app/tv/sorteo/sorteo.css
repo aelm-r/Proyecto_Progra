@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .contenedor-sorteo {
   width: 100%;
   text-align: center;
@@ -7,7 +12,7 @@
 /* Título */
 h1 {
   font-size: 60px;
-  margin-bottom: 35px;
+  margin: 0 0 25px;
   animation: aparecer-arriba 0.8s ease-out both;
 }
 
@@ -32,52 +37,96 @@ h1 {
   margin: 5px 0 0;
 }
 
-/* Grupos */
 .grupos {
   display: flex;
   justify-content: center;
+  gap: 40px;
   width: 100%;
 }
 
 .grupo {
-  width: min(900px, 90%);
+  width: min(760px, 45%);
   padding: 25px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.75);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .grupo h2 {
-  grid-column: 1 / -1;
-  font-size: 40px;
-  margin-bottom: 25px;
+  font-size: 44px;
+  color: #ffd700;
+  margin: 0 0 10px;
 }
 
-/* Tarjetas de equipos */
 .tarjeta-equipo {
-  padding: 15px;
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 20px;
   background: rgba(255, 255, 255, 0.12);
+  border-left: 10px solid #ffd700;
   border-radius: 10px;
-  transition: background 0.3s ease, transform 0.3s ease;
+  text-align: left;
 }
 
-.tarjeta-equipo:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.02);
+.tarjeta-equipo .posicion {
+  font-size: 40px;
+  font-weight: 700;
+  min-width: 70px;
+  color: #ffd700;
 }
 
 .tarjeta-equipo h3 {
-  font-size: 28px;
+  font-size: 34px;
   margin: 0;
 }
 
 .tarjeta-equipo p {
   font-size: 22px;
-  margin: 5px 0 0;
+  margin: 2px 0 0;
+  opacity: 0.85;
+}
+
+.fixture {
+  width: min(1560px, 94%);
+  margin: 30px auto 0;
+  padding: 18px 25px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.fixture h2 {
+  font-size: 30px;
+  color: #ffd700;
+  margin: 0 0 12px;
+}
+
+.fixture ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 25px;
+  text-align: left;
+  font-size: 22px;
+}
+
+.fixture .numero {
+  display: inline-block;
+  min-width: 32px;
+  font-weight: 700;
+}
+
+.fixture .grupo-chip {
+  display: inline-block;
+  padding: 0 8px;
+  margin-right: 8px;
+  border-radius: 6px;
+  background: rgba(255, 215, 0, 0.25);
+  font-weight: 700;
 }
 
 /* Mensaje de finalización */
@@ -150,20 +199,20 @@ h1 {
 
 /* Logos reales de los equipos */
 .logo-equipo {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   display: block;
-  margin: 0 auto 12px;
+  flex-shrink: 0;
 }
 
 /* Alternativa cuando el equipo no tiene logo */
 .logo-pendiente {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
-  margin: 0 auto 12px;
+  font-size: 50px;
+  flex-shrink: 0;
 }

@@ -69,7 +69,7 @@
       <button class="btn btn--principal" [disabled]="!puede().iniciar" (click)="iniciar()">Iniciar combate</button>
       <button class="btn btn--principal" [disabled]="!puede().iniciarAsalto" (click)="iniciarAsalto()">Iniciar asalto</button>
       <button class="btn btn--principal" [disabled]="!puede().cerrarAsalto" (click)="abrir('asalto')">Registrar ganador del asalto</button>
-      <button class="btn" [disabled]="!puede().cerrarAsalto" (click)="abrir('asalto', 'nulo')">Asalto nulo</button>
+      <button class="btn" [disabled]="!puede().cerrarAsalto || esMuerteSubita()" (click)="abrir('asalto', 'nulo')">Asalto nulo</button>
       <button class="btn" [disabled]="!puede().amonestar" (click)="abrir('amonestacion')">Amonestación</button>
       <button class="btn" [disabled]="!puede().pausar" (click)="abrir('pausa')">Pausa técnica</button>
       <button class="btn" [disabled]="!puede().reanudar" (click)="reanudar()">Reanudar</button>
@@ -107,7 +107,7 @@
             <fieldset class="opciones">
               <legend>¿Cómo terminó?</legend>
               @for (r of resultados; track r.valor) {
-                @if (r.valor !== 'decision_juez' || esMuerteSubita()) {
+                @if (esMuerteSubita() ? r.valor !== 'nulo' : r.valor !== 'decision_juez') {
                   <label class="opcion">
                     <input type="radio" name="resultado" [value]="r.valor" [(ngModel)]="resultadoSel" />
                     <span>{{ r.texto }}</span>

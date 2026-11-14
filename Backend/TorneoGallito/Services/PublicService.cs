@@ -76,27 +76,37 @@ namespace TorneoGallito.Services
                 }
             }
 
-            if (estado.SiguienteCombate != null)
-            {
-                return "proxcombate";
-            }
-
-            if (estado.Fase == FasesCombate.EventoGrupos)
-            {
-                return "rotacion";
-            }
-
-            if (estado.Fase == FasesCombate.EventoEliminatoria)
-            {
-                return "eliminatoria";
-            }
-
             if (estado.Fase == FasesCombate.EventoFinalizado)
             {
                 return "campeon";
             }
 
-            return "bienvenida";
+            if (estado.SiguienteCombate != null)
+            {
+                long bloque = estado.HoraServidor.Ticks / TimeSpan.TicksPerSecond / 12;
+                if (bloque % 2 == 0)
+                {
+                    return "proxcombate";
+                }
+            }
+
+            return PantallaDeTablas(estado);
+        }
+
+        private static string PantallaDeTablas(EstadoEventoResponseDTO estado)
+        {
+            if (estado.Fase != FasesCombate.EventoEliminatoria)
+            {
+                return "rotacion";
+            }
+
+            bool semifinalesDefinidas = estado.Bracket.Any(l => l.EquipoAId != null && l.EquipoBId != null);
+            if (!semifinalesDefinidas)
+            {
+                return "rotacion";
+            }
+
+            return "eliminatoria";
         }
 
         public SorteoResponseDTO ObtenerSorteo()
@@ -130,6 +140,11 @@ namespace TorneoGallito.Services
             var respuesta = new List<GrupoResponseDTO>();
             var grupos = _context.Grupos.OrderBy(g => g.Nombre).ToList();
 
+            var finalizados = _context.Combates
+                .AsNoTracking()
+                .Where(c => c.Fase == FasesCombate.Grupos && c.Estado == EstadosCombate.Finalizado)
+                .ToList();
+
             foreach (var grupo in grupos)
             {
                 var filas = _context.Database
@@ -152,8 +167,8 @@ namespace TorneoGallito.Services
                         Puntos = fila.Puntos
                     };
 
-                    var jugados = _context.Combates
-                        .Where(c => c.GrupoId == grupo.Id && c.Estado == EstadosCombate.Finalizado
+                    var jugados = finalizados
+                        .Where(c => c.GrupoId == grupo.Id
                                  && (c.EquipoAId == fila.EquipoId || c.EquipoBId == fila.EquipoId))
                         .ToList();
 
@@ -192,6 +207,11 @@ namespace TorneoGallito.Services
 
             var respuesta = new List<LlaveResponseDTO>();
 
+            var eliminatorios = _context.Combates
+                .AsNoTracking()
+                .Where(c => c.Fase != FasesCombate.Grupos)
+                .ToDictionary(c => c.Id);
+
             foreach (var fila in filas)
             {
                 var llave = new LlaveResponseDTO
@@ -205,8 +225,7 @@ namespace TorneoGallito.Services
                     Marcador = ObtenerMarcador(fila.CombateId)
                 };
 
-                var combate = _context.Combates.FirstOrDefault(c => c.Id == fila.CombateId);
-                if (combate != null)
+                if (eliminatorios.TryGetValue(fila.CombateId, out var combate))
                 {
                     llave.EquipoAId = combate.EquipoAId;
                     llave.EquipoBId = combate.EquipoBId;
@@ -435,18 +454,25 @@ namespace TorneoGallito.Services
             }
         }
 
+        private Dictionary<int, EquipoResumenDTO>? _equiposCargados;
+
         private EquipoResumenDTO BuscarEquipo(int equipoId)
         {
-            var equipo = _context.Equipos
-                .Include(e => e.Robot)
-                .FirstOrDefault(e => e.Id == equipoId);
-
-            if (equipo == null)
+            if (_equiposCargados == null)
             {
-                return new EquipoResumenDTO { Id = equipoId };
+                _equiposCargados = _context.Equipos
+                    .AsNoTracking()
+                    .Include(e => e.Robot)
+                    .ToList()
+                    .ToDictionary(e => e.Id, e => ConvertirEquipo(e));
             }
 
-            return ConvertirEquipo(equipo);
+            if (_equiposCargados.TryGetValue(equipoId, out var equipo))
+            {
+                return equipo;
+            }
+
+            return new EquipoResumenDTO { Id = equipoId };
         }
 
         private static EquipoResumenDTO ConvertirEquipo(Equipo equipo)

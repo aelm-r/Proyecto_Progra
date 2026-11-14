@@ -7,8 +7,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, catchError, delay, map, of, throwError } from 'rxjs';
 import { COMBATES_MOCK } from './juez-mocks';
-
-const API_URL = `http://${window.location.hostname}:5256/api`;
+import { API_URL } from '../core/config';
 // true = datos simulados (usuario juez / juez123). false = API real.
 const USAR_MOCKS = false;
 

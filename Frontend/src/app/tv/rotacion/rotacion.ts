@@ -12,5 +12,5 @@ import { EstadoEvento } from '../../services/torneo-api';
 export class Rotacion {
   estado = input.required<EstadoEvento>();
 
-  imagenFondo = input<string>('assets/image_954b97.jpg');
+  imagenFondo = input<string>('/imagenes/fondo-gallito.png');
 }

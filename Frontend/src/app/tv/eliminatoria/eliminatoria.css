@@ -108,32 +108,42 @@
 .llave-item {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 20px 28px;
+  padding: 22px 28px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   border-left: 7px solid #ffd700;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.llave-item:hover {
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
 }
 
 .nombre-llave {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   color: #ffcc00;
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .equipos-llave {
-  font-size: 26px;
+  font-size: 42px;
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.equipos-llave .vs {
+  color: #ffd700;
+  margin: 0 14px;
+}
+
+.equipos-llave .ganador {
+  color: #7CFC9A;
+}
+
+.marcador-llave {
+  font-size: 36px;
+  font-weight: bold;
+  color: #cbd5e1;
 }
 
 /* Pie de página */

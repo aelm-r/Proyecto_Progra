@@ -46,14 +46,14 @@
 }
 
 .encabezado-rotacion h1 {
-  font-size: 44px;
+  font-size: 60px;
   margin: 0 0 2px;
   text-transform: uppercase;
   text-shadow: 0 0 12px rgba(0, 170, 255, 0.7);
 }
 
 .subtitulo-rotacion {
-  font-size: 18px;
+  font-size: 24px;
   color: #ffd700;
   letter-spacing: 2px;
   margin: 0 0 5px 0;
@@ -63,20 +63,21 @@
 /* Grilla */
 .grilla-rotacion {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
-  gap: 12px;
-  align-items: center;
+  gap: 30px;
+  align-items: stretch;
+  justify-content: center;
 }
 
 /* Tarjetas de grupos */
 .seccion-tabla {
   width: 100%;
-  max-width: 1350px;
+  max-width: 860px;
   background: rgba(10, 10, 15, 0.94);
   border: 3px solid #00aaff;
   border-radius: 16px;
-  padding: 10px 30px;
+  padding: 18px 26px;
   box-sizing: border-box;
   box-shadow: 0 0 25px rgba(0, 170, 255, 0.3);
   display: flex;
@@ -94,7 +95,7 @@
 }
 
 .seccion-tabla h3 {
-  font-size: 22px;
+  font-size: 40px;
   margin: 0 0 6px 0;
   color: #ffd700;
   text-transform: uppercase;
@@ -111,14 +112,14 @@
 .tabla-posiciones th {
   background: rgba(0, 170, 255, 0.25);
   color: #00aaff;
-  font-size: 16px;
+  font-size: 22px;
   padding: 6px 12px;
   text-transform: uppercase;
 }
 
 .tabla-posiciones td {
-  padding: 7px 12px;
-  font-size: 20px;
+  padding: 14px 12px;
+  font-size: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
   transition: background 0.25s ease;

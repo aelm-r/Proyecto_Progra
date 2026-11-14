@@ -144,9 +144,14 @@ namespace TorneoGallito.Services
                 throw new ConflictoException("No hay un asalto abierto.");
             }
 
-            if (dto.Resultado == ResultadosAsalto.DecisionJuez && combate.Fase == FasesCombate.Grupos)
+            if (dto.Resultado == ResultadosAsalto.DecisionJuez && !asalto.EsMuerteSubita)
             {
-                throw new ConflictoException("La decisión del juez solo se usa en eliminatorias.");
+                throw new ConflictoException("La decisión del juez solo se usa en la muerte súbita de la eliminatoria.");
+            }
+
+            if (dto.Resultado == ResultadosAsalto.Nulo && asalto.EsMuerteSubita)
+            {
+                throw new ConflictoException("En muerte súbita no hay nulo: si nadie revienta el globo, decide el juez.");
             }
 
             int limite = ResultadosAsalto.SegundosAsalto;
@@ -290,12 +295,18 @@ namespace TorneoGallito.Services
 
             int ganadosA = _context.Asaltos.Count(a => a.CombateId == id && a.GanadorId == combate.EquipoAId);
             int ganadosB = _context.Asaltos.Count(a => a.CombateId == id && a.GanadorId == combate.EquipoBId);
+            int jugados = _context.Asaltos.Count(a => a.CombateId == id);
+
+            if (ganadosA < 2 && ganadosB < 2 && jugados < ResultadosAsalto.TotalAsaltos)
+            {
+                throw new ConflictoException($"El combate todavía no está definido: van {ganadosA} – {ganadosB} y se han jugado {jugados} de {ResultadosAsalto.TotalAsaltos} asaltos.");
+            }
 
             if (ganadosA == ganadosB)
             {
                 if (combate.Fase != FasesCombate.Grupos)
                 {
-                    throw new ConflictoException("En eliminatoria no puede haber empate: el último asalto se define con decision_juez.");
+                    throw new ConflictoException("En eliminatoria no puede haber empate: inicien el asalto de muerte súbita.");
                 }
 
                 combate.Estado = EstadosCombate.Finalizado;
@@ -430,6 +441,10 @@ namespace TorneoGallito.Services
             else if (dto.GanadorId == null)
             {
                 combate.TipoResultado = TiposResultadoCombate.Empate;
+            }
+            else if (combate.TipoResultado == TiposResultadoCombate.Empate)
+            {
+                combate.TipoResultado = TiposResultadoCombate.DecisionJuez;
             }
 
             combate.ActualizadoPor = usuarioId;

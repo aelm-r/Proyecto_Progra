@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Npgsql;
 using TorneoGallito.Data;
 using TorneoGallito.DTOs.Responses;
 using TorneoGallito.Middleware;
@@ -14,8 +15,19 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
+var cadenaConexion = new NpgsqlConnectionStringBuilder(builder.Configuration.GetConnectionString("CadenaConexion"));
+if (string.IsNullOrEmpty(cadenaConexion.Timezone)
+    && TimeZoneInfo.TryConvertWindowsIdToIanaId(TimeZoneInfo.Local.Id, out var zonaIana))
+{
+    cadenaConexion.Timezone = zonaIana;
+}
+else if (string.IsNullOrEmpty(cadenaConexion.Timezone))
+{
+    cadenaConexion.Timezone = TimeZoneInfo.Local.Id;
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("CadenaConexion"))
+    options.UseNpgsql(cadenaConexion.ConnectionString)
            .UseSnakeCaseNamingConvention());
 
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -85,15 +97,9 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-var origenes = builder.Configuration.GetSection("Cors:Origenes").Get<string[]>();
-if (origenes == null)
-{
-    origenes = new string[] { "http://localhost:4200" };
-}
-
 builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins(origenes)
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod()));
 

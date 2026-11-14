@@ -2,7 +2,12 @@ import { Routes } from '@angular/router';
 
 import { AppTv } from './tv/app-tv/app-tv';
 import { AppJuez } from './juez/app-juez';
-import { AppAdmin } from './admin/app-admin';
+import { AdminComponent } from './admin/admin.component';
+import { EquiposComponent } from './admin/equipos.component';
+import { SorteoComponent } from './admin/sorteo.component';
+import { CorreccionesComponent } from './admin/correcciones.component';
+import { LoginComponent } from './login/login.component';
+import { rolGuard } from './core/rol.guard';
 
 export const routes: Routes = [
 
@@ -23,8 +28,20 @@ export const routes: Routes = [
   },
 
   {
+    path: 'login',
+    component: LoginComponent
+  },
+
+  {
     path: 'admin',
-    component: AppAdmin
+    component: AdminComponent,
+    canActivate: [rolGuard('Admin')],
+    children: [
+      { path: '', redirectTo: 'equipos', pathMatch: 'full' },
+      { path: 'equipos', component: EquiposComponent },
+      { path: 'sorteo', component: SorteoComponent },
+      { path: 'correcciones', component: CorreccionesComponent }
+    ]
   },
 
   {

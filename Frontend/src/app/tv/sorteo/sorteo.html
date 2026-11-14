@@ -6,44 +6,51 @@
 
     <div class="grupos">
 
-      <div class="grupo">
+      @for (grupo of [{ nombre: 'A', equipos: grupoA() }, { nombre: 'B', equipos: grupoB() }]; track grupo.nombre) {
+        <section class="grupo">
+          <h2>GRUPO {{ grupo.nombre }}</h2>
 
-        <h2>ASIGNACIONES OFICIALES</h2>
+          @for (item of grupo.equipos; track item.equipo.id) {
+            <div
+              class="tarjeta-equipo animacion-entrada"
+              [style.animation-delay]="retraso(item)"
+              [style.border-left-color]="item.equipo.colorHex">
 
-        @for (item of estado().sorteo.equipos; track item.equipo.id) {
+              <span class="posicion">{{ item.grupo }}{{ item.posicionSorteo }}</span>
 
-          <div class="tarjeta-equipo animacion-entrada">
+              @if (item.equipo.logoUrl) {
+                <img
+                  class="logo-equipo"
+                  [src]="item.equipo.logoUrl"
+                  [alt]="'Logo de ' + item.equipo.nombre">
+              } @else {
+                <div class="logo-pendiente">🤖</div>
+              }
 
-            @if (item.equipo.logoUrl) {
-              <img
-                class="logo-equipo"
-                [src]="item.equipo.logoUrl"
-                [alt]="'Logo de ' + item.equipo.nombre">
-            } @else {
-              <div class="logo-pendiente">🤖</div>
-            }
+              <div class="datos">
+                <h3>{{ item.equipo.nombre }}</h3>
+                <p>{{ item.equipo.robot ?? 'Robot pendiente' }}</p>
+              </div>
 
-            <h3>{{ item.equipo.nombre }}</h3>
-
-            <p>GRUPO {{ item.grupo }}</p>
-
-            <p>POSICIÓN {{ item.posicionSorteo }}</p>
-
-            <p>
-              {{ item.equipo.robot ?? 'Robot pendiente' }}
-            </p>
-
-          </div>
-
-        }
-
-      </div>
+            </div>
+          }
+        </section>
+      }
 
     </div>
 
-    <h2 class="mensaje-final">
-      ¡SORTEO FINALIZADO!
-    </h2>
+    <section class="fixture animacion-entrada" [style.animation-delay]="(totalRevelacion + 1.5) + 's'">
+      <h2>ORDEN DE COMBATES</h2>
+      <ol>
+        @for (c of fixture(); track c.numero) {
+          <li>
+            <span class="numero">{{ c.numero }}</span>
+            <span class="grupo-chip">{{ c.grupo }}</span>
+            {{ c.equipoA }} <b>vs</b> {{ c.equipoB }}
+          </li>
+        }
+      </ol>
+    </section>
 
   } @else {
 
